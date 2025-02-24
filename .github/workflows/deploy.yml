@@ -34,4 +34,5 @@ jobs:
         uses: amondnet/vercel-action@v25
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}  # Use the Vercel token from GitHub Secrets
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }} 
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}  # Optional: Add if using a specific project

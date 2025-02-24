@@ -12,4 +12,8 @@ app.get('/api/hi', (req, res) => {
   res.json({ message: 'Hi!' });
 });
 
+app.get('/api/actionTest', (req, res) => {
+  res.json({ message: 'Actions worked!' });
+});
+
 export default app;
