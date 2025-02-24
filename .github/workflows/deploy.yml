@@ -24,7 +24,7 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # Run ESLint to check for code errors (Add ESLint to your project if not installed)
+      # Run ESLint to check for code errors 
       - name: Run ESLint
         run: npx eslint . --ext .js
         continue-on-error: false  # Ensure the workflow fails on errors
