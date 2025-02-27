@@ -13,15 +13,13 @@ async function createPost(text, imagen, hashtags, reposted = false) {
      */
 
     const label = "Post";
-    const time = new Date()
     const query = `
         CREATE (p:${label} {
             text: $text,
             imagen: $imagen,
-            time_stamp: $time,
             likes: 0,
             dislikes: 0,
-            reposted: $reposted,
+            retweet: $reposted,
             hashtags: $hashtags
         })
     `;
@@ -29,7 +27,7 @@ async function createPost(text, imagen, hashtags, reposted = false) {
     const session = driver.session();
 
     try {
-        await session.run(query, { text, time, imagen, reposted, hashtags });
+        await session.run(query, { text, imagen, reposted, hashtags });
         console.log("Post created successfully.");
     } catch (error) {
         console.error("Error executing query:", error);
@@ -97,7 +95,7 @@ async function createComment(text, reposted = false) {
             time_stamp: $time,
             likes: 0,
             dislikes: 0,
-            reposted: $reposted
+            retweet: $reposted
         })
     `;
 
