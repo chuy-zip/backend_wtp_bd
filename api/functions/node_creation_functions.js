@@ -52,7 +52,7 @@ export async function createUser(username, password, email, born, first_name, la
     const label = "User";
     const query = `
         CREATE (u:${label} {
-            username: $username,
+            user_name: $username,
             password: $password,
             email: $email,
             born: $born,
