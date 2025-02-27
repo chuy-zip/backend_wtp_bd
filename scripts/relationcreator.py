@@ -1,6 +1,12 @@
 import pandas as pd
 import random
 from datetime import datetime, timedelta
+import os
+
+# Create a folder to store the output CSV files
+output_folder = "relationship_csvs"
+os.makedirs(output_folder, exist_ok=True)  # Create the folder if it doesn't exist
+
 
 # Load CSV files into DataFrames
 csv_files = {
@@ -320,16 +326,18 @@ relationships = [
 # Generate relationship data
 data = []
 
+# Generate relationship data for each relationship type
 for rel in relationships:
     from_node_type = rel["from"].lower()  # Convert to lowercase (e.g., "User" -> "user")
     to_node_type = rel["to"].lower()      # Convert to lowercase (e.g., "Post" -> "post")
     relation_name = rel["relation_name"]
     
     # Get IDs for "from" and "to" nodes
-    from_ids = csv_files[from_node_type + "s"]['id'].tolist()  # Access from dictionary
-    to_ids = csv_files[to_node_type + "s"]['id'].tolist()      # Access from dictionary
+    from_ids = csv_files[from_node_type + "s"]['id'].tolist()
+    to_ids = csv_files[to_node_type + "s"]['id'].tolist()
     
     # Generate random relationships
+    data = []
     for _ in range(100):  # Adjust the number of relationships as needed
         from_id = random.choice(from_ids)
         to_id = random.choice(to_ids)
@@ -358,11 +366,12 @@ for rel in relationships:
             **attributes
         }
         data.append(row)
-
-# Convert to DataFrame
-df = pd.DataFrame(data)
-
-# Save to CSV
-df.to_csv('RELATIONSHIPS.csv', index=False)
-
-print("Relationships CSV generated successfully!")
+    
+    # Convert to DataFrame
+    df = pd.DataFrame(data)
+    
+    # Save to CSV in the output folder
+    output_file = os.path.join(output_folder, f"{from_node_type}_{relation_name}_{to_node_type}.csv")
+    df.to_csv(output_file, index=False)
+    
+    print(f"Generated {len(data)} relationships for {relation_name} and saved to {output_file}")

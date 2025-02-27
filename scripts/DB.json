@@ -1,0 +1,204 @@
+{
+    "format": "json",
+    "nodes": [
+      {
+        "type": "User",
+        "properties": {
+          "user_name": "string",
+          "password": "string",
+          "email": "string",
+          "born": "date",
+          "first_name": "string",
+          "last_name": "string",
+          "genre": "string",
+          "followers": "int",
+          "following": "int",
+          "verified": "bool"
+        }
+      },
+      {
+        "type": "Post",
+        "properties": {
+          "text": "string",
+          "imagen": "string",
+          "likes": "int",
+          "dislikes": "int",
+          "retweet": "bool",
+          "hashtags": "list"
+        }
+      },
+      {
+        "type": "Comment",
+        "properties": {
+          "text": "string",
+          "time_stamp": "date",
+          "likes": "int",
+          "dislikes": "int",
+          "retweet": "bool"
+        }
+      },
+      {
+        "type": "Topic",
+        "properties": {
+          "name": "string",
+          "description": "string",
+          "time_creation": "timeStamp",
+          "followers": "int",
+          "ranking": "int"
+        }
+      },
+      {
+        "type": "Country",
+        "properties": {
+          "name": "string",
+          "description": "text",
+          "continent": "string",
+          "language": "list",
+          "country_code": "string"
+        }
+      }
+    ],
+    "relationships": [
+      {
+        "from": "User",
+        "to": "Post",
+        "type": "CREATED",
+        "properties": {
+          "visibility": "string",
+          "source": "string",
+          "time_stamp": "timeStamp"
+        }
+      },
+      {
+        "from": "User",
+        "to": "Post",
+        "type": "LIKES",
+        "properties": {
+          "browser": "string",
+          "source": "string",
+          "time": "timeStamp"
+        }
+      },
+      {
+        "from": "User",
+        "to": "Post",
+        "type": "DISLIKES",
+        "properties": {
+          "browser": "string",
+          "source": "string",
+          "time_stamp": "timeStamp"
+        }
+      },
+      {
+        "from": "User",
+        "to": "User",
+        "type": "FOLLOWS",
+        "properties": {
+          "since": "date",
+          "follow_type": "string",
+          "notifications": "bool"
+        }
+      },
+      {
+        "from": "User",
+        "to": "User",
+        "type": "BLOCKED",
+        "properties": {
+          "time_stamp": "timeStamp",
+          "reason": "string",
+          "is_permanent": "bool"
+        }
+      },
+      {
+        "from": "User",
+        "to": "Comment",
+        "type": "LIKES",
+        "properties": {
+          "browser": "string",
+          "source": "string",
+          "time": "timeStamp"
+        }
+      },
+      {
+        "from": "User",
+        "to": "Comment",
+        "type": "DISLIKES",
+        "properties": {
+          "browser": "string",
+          "source": "string",
+          "time": "timeStamp"
+        }
+      },
+      {
+        "from": "User",
+        "to": "Comment",
+        "type": "WROTE",
+        "properties": {
+          "time_stamp": "timeStamp",
+          "language": "string",
+          "edited": "bool"
+        }
+      },
+      {
+        "from": "User",
+        "to": "Topic",
+        "type": "CREATED",
+        "properties": {
+          "visibility": "string",
+          "source": "string",
+          "time_stamp": "timeStamp"
+        }
+      },
+      {
+        "from": "User",
+        "to": "Topic",
+        "type": "INTERESTED",
+        "properties": {
+          "time_stamp": "timeStamp",
+          "interest_level": "float",
+          "visit_count": "int"
+        }
+      },
+      {
+        "from": "User",
+        "to": "Country",
+        "type": "FROM",
+        "properties": {
+          "leftNodeActive": "bool",
+          "year": "date",
+          "day": "date"
+        }
+      },
+      {
+        "from": "Post",
+        "to": "Topic",
+        "type": "RELATED",
+        "properties": {
+          "year": "date",
+          "day": "date",
+          "relevance": "int"
+        }
+      },
+      {
+        "from": "Comment",
+        "to": "Post",
+        "type": "BELONGS_TO",
+        "properties": {
+          "time_stamp": "timeStamp",
+          "writter_is_active": "bool",
+          "is_pinned": "bool"
+        }
+      },
+      {
+        "from": "Topic",
+        "to": "Country",
+        "type": "FROM",
+        "properties": {
+          "leftNodeActive": "bool",
+          "year": "date",
+          "day": "date"
+        }
+      }
+    ]
+  }
+  
