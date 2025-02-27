@@ -1,5 +1,7 @@
 import express from 'express';
 import { testConnection, getNodes } from './functions/test.js';
+import { createPost , createUser, createComment, createTopic, createCountry} from './functions/node_creation_functions.js'
+
 const port = 3000
 
 const app = express();
@@ -29,6 +31,30 @@ app.get('/api/neoTest', async (req, res) => {
     res.status(200).json(result)
   } catch (error) {
     res.status(500).json({ error: error })
+  }
+});
+
+// NODE CREATION
+// create node post
+// por editar
+app.post('/api/createPost', async (req, res) => {
+  try {
+    const { text, imagen, hashtags, reposted } = req.body;
+    await createPost(text, imagen, hashtags, reposted);
+    res.status(201).json({ message: 'Post created successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Register practicamente
+app.post('/api/registerUser', async (req, res) => {
+  try {
+    const { username, password, email, born, first_name, last_name, gender } = req.body;
+    await createUser(username, password, email, born, first_name, last_name, gender);
+    res.status(201).json({ message: 'User created successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 });
 
