@@ -2,7 +2,7 @@ import getDriver from '../neoDriver.js';
 
 const driver = getDriver();
 
-async function createPost(text, imagen, hashtags, reposted = false) {
+export async function createPost(text, imagen, hashtags, reposted = false) {
     /**
      * Creates a Post node with specified attributes.
      *
@@ -36,7 +36,7 @@ async function createPost(text, imagen, hashtags, reposted = false) {
     }
 }
 
-async function createUser(username, password, email, born, first_name, last_name, gender) {
+export async function createUser(username, password, email, born, first_name, last_name, gender) {
     /**
      * Creates a User node with specified attributes.
      *
@@ -78,7 +78,7 @@ async function createUser(username, password, email, born, first_name, last_name
 }
 
 
-async function createComment(text, reposted = false) {
+export async function createComment(text, reposted = false) {
     /**
      * Creates a Comment node with attributes
      * 
@@ -111,7 +111,7 @@ async function createComment(text, reposted = false) {
     }
 }
 
-async function createTopic( name, description) {
+export async function createTopic( name, description) {
     /**
      * Create a Topic node with specified attributes.
      * 
@@ -144,7 +144,7 @@ async function createTopic( name, description) {
     }
 }
 
-async function createCountry(name, description, continent, language, country_code) {
+export async function createCountry(name, description, continent, language, country_code) {
     /**
      * Creates a Country node with specified attributes
      * 
