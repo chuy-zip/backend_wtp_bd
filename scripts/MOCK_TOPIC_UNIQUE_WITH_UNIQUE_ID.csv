@@ -1,0 +1,351 @@
+id,name,description,time_creation,followers,ranking
+4701,Garden,leo maecenas pulvinar lobortis est phasellus sit amet erat nulla tempus vivamus in felis eu,7/15/2000,426448,255
+4702,Home,scelerisque quam turpis adipiscing lorem vitae mattis nibh ligula nec,2/14/2002,603018,119
+4703,Books,aliquam convallis nunc proin at turpis a pede posuere nonummy integer non velit,7/8/2004,224447,188
+4704,Outdoors,donec pharetra magna vestibulum aliquet ultrices erat tortor sollicitudin mi sit amet lobortis sapien sapien,1/31/2002,100247,117
+4705,Kids,habitasse platea dictumst maecenas ut massa quis augue luctus tincidunt nulla mollis molestie lorem quisque ut erat curabitur gravida nisi,4/21/2019,404748,34
+4706,Clothing,feugiat et eros vestibulum ac est lacinia nisi venenatis tristique fusce,6/1/2012,136224,21
+4707,Baby,dapibus duis at velit eu est congue elementum in hac habitasse platea dictumst morbi vestibulum velit id pretium,9/26/2008,503506,280
+4708,Health,habitasse platea dictumst aliquam augue quam sollicitudin vitae consectetuer eget rutrum at lorem integer tincidunt ante vel ipsum praesent blandit,5/7/2016,981807,190
+4709,Movies,consequat in consequat ut nulla sed accumsan felis ut at dolor,4/17/2003,64883,287
+4710,Jewelry,tempor turpis nec euismod scelerisque quam turpis adipiscing lorem vitae mattis nibh ligula nec,8/22/2005,708106,62
+4711,Toys,dui proin leo odio porttitor id consequat in consequat ut nulla sed accumsan felis ut at,7/26/2005,539258,49
+4712,Tools,id mauris vulputate elementum nullam varius nulla facilisi cras non velit nec nisi vulputate nonummy maecenas tincidunt lacus at,11/29/2000,970684,220
+4713,Movies_1,sed justo pellentesque viverra pede ac diam cras pellentesque volutpat dui maecenas tristique est et tempus semper est,3/21/2019,931379,205
+4714,Games,dictumst etiam faucibus cursus urna ut tellus nulla ut erat id,9/8/2021,63558,122
+4715,Movies_2,montes nascetur ridiculus mus vivamus vestibulum sagittis sapien cum sociis,5/16/2024,728812,95
+4716,Clothing_1,erat id mauris vulputate elementum nullam varius nulla facilisi cras non velit nec nisi vulputate nonummy maecenas tincidunt lacus,6/8/2021,351804,173
+4717,Automotive,nisi vulputate nonummy maecenas tincidunt lacus at velit vivamus vel nulla eget,11/28/2022,324811,130
+4718,Jewelry_1,vestibulum aliquet ultrices erat tortor sollicitudin mi sit amet lobortis sapien sapien non mi integer ac neque duis,8/9/2000,394650,273
+4719,Sports,vestibulum sit amet cursus id turpis integer aliquet massa id lobortis convallis tortor risus dapibus augue,8/15/2014,200961,199
+4720,Computers,nulla sed accumsan felis ut at dolor quis odio consequat varius integer ac leo pellentesque ultrices mattis odio,7/7/2002,797277,60
+4721,Games_1,morbi sem mauris laoreet ut rhoncus aliquet pulvinar sed nisl nunc rhoncus dui vel sem sed sagittis,7/26/2024,319175,188
+4722,Movies_3,consequat dui nec nisi volutpat eleifend donec ut dolor morbi vel lectus in quam fringilla rhoncus mauris enim,12/1/2015,784329,113
+4723,Tools_1,accumsan odio curabitur convallis duis consequat dui nec nisi volutpat eleifend donec ut dolor morbi vel lectus,11/5/2019,550947,188
+4724,Electronics,accumsan felis ut at dolor quis odio consequat varius integer ac leo pellentesque ultrices mattis odio donec vitae nisi nam,8/17/2006,806239,119
+4725,Beauty,neque sapien placerat ante nulla justo aliquam quis turpis eget elit sodales scelerisque mauris sit amet,10/23/2014,444118,227
+4726,Grocery,curabitur at ipsum ac tellus semper interdum mauris ullamcorper purus sit amet nulla quisque arcu libero rutrum,5/1/2001,593666,107
+4727,Outdoors_1,nascetur ridiculus mus vivamus vestibulum sagittis sapien cum sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus mus etiam,5/10/2017,667167,90
+4728,Industrial,pellentesque ultrices phasellus id sapien in sapien iaculis congue vivamus metus,3/19/2004,516847,278
+4729,Movies_4,lacus purus aliquet at feugiat non pretium quis lectus suspendisse potenti in eleifend quam a odio in hac,4/14/2008,79664,95
+4730,Grocery_1,integer pede justo lacinia eget tincidunt eget tempus vel pede morbi porttitor lorem id ligula,5/17/2023,702199,84
+4731,Industrial_1,nisl venenatis lacinia aenean sit amet justo morbi ut odio cras mi pede malesuada in imperdiet et,10/8/2009,849704,259
+4732,Outdoors_2,leo maecenas pulvinar lobortis est phasellus sit amet erat nulla tempus vivamus in felis,10/19/2016,438011,57
+4733,Shoes,diam vitae quam suspendisse potenti nullam porttitor lacus at turpis donec posuere metus,2/20/2024,907111,136
+4734,Sports_1,sit amet eros suspendisse accumsan tortor quis turpis sed ante vivamus tortor duis mattis egestas metus aenean fermentum donec ut,5/3/2010,612435,93
+4735,Games_2,metus sapien ut nunc vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere,5/19/2022,995493,246
+4736,Electronics_1,maecenas tristique est et tempus semper est quam pharetra magna ac consequat metus sapien ut nunc vestibulum,9/15/2003,709957,48
+4737,Baby_1,nunc vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae mauris viverra diam vitae,1/30/2017,860512,87
+4738,Automotive_1,ac neque duis bibendum morbi non quam nec dui luctus rutrum nulla tellus in sagittis,2/23/2018,108781,182
+4739,Industrial_2,sapien varius ut blandit non interdum in ante vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia,3/28/2004,374708,71
+4740,Garden_1,mattis nibh ligula nec sem duis aliquam convallis nunc proin at,5/28/2000,611333,174
+4741,Toys_1,eu orci mauris lacinia sapien quis libero nullam sit amet turpis elementum ligula vehicula consequat morbi a ipsum integer,11/11/2005,916170,162
+4742,Automotive_2,tristique est et tempus semper est quam pharetra magna ac consequat metus sapien ut nunc vestibulum ante,5/3/2024,123440,147
+4743,Movies_5,dictumst aliquam augue quam sollicitudin vitae consectetuer eget rutrum at lorem integer tincidunt ante vel ipsum praesent blandit lacinia,7/9/2021,904214,187
+4744,Baby_2,donec ut dolor morbi vel lectus in quam fringilla rhoncus mauris,12/17/2011,284912,190
+4745,Kids_1,justo maecenas rhoncus aliquam lacus morbi quis tortor id nulla ultrices aliquet maecenas leo,5/8/2007,48900,272
+4746,Health_1,curabitur at ipsum ac tellus semper interdum mauris ullamcorper purus,5/31/2017,59499,25
+4747,Books_1,sed accumsan felis ut at dolor quis odio consequat varius integer ac leo pellentesque ultrices mattis odio donec,1/1/2021,462201,111
+4748,Clothing_2,adipiscing lorem vitae mattis nibh ligula nec sem duis aliquam convallis nunc proin at turpis a,10/6/2019,477926,21
+4749,Tools_2,amet erat nulla tempus vivamus in felis eu sapien cursus vestibulum proin eu,2/23/2005,267390,150
+4750,Clothing_3,integer a nibh in quis justo maecenas rhoncus aliquam lacus morbi quis tortor id nulla ultrices aliquet,5/3/2013,868855,249
+4751,Shoes_1,gravida nisi at nibh in hac habitasse platea dictumst aliquam augue quam sollicitudin vitae consectetuer eget,5/11/2002,717835,85
+4752,Clothing_4,est lacinia nisi venenatis tristique fusce congue diam id ornare imperdiet,11/30/2002,431984,77
+4753,Music,ac consequat metus sapien ut nunc vestibulum ante ipsum primis in faucibus orci luctus et,1/27/2019,964674,78
+4754,Books_2,nunc viverra dapibus nulla suscipit ligula in lacus curabitur at,1/17/2011,466577,298
+4755,Sports_2,erat volutpat in congue etiam justo etiam pretium iaculis justo,8/26/2014,510042,67
+4756,Industrial_3,turpis integer aliquet massa id lobortis convallis tortor risus dapibus augue vel accumsan tellus nisi,10/27/2007,602179,18
+4757,Shoes_2,sit amet turpis elementum ligula vehicula consequat morbi a ipsum integer a nibh,4/17/2023,298532,257
+4758,Outdoors_3,vel ipsum praesent blandit lacinia erat vestibulum sed magna at nunc commodo placerat praesent blandit nam nulla integer,11/29/2008,226042,44
+4759,Computers_1,suspendisse accumsan tortor quis turpis sed ante vivamus tortor duis,3/19/2011,538913,197
+4760,Clothing_5,vulputate justo in blandit ultrices enim lorem ipsum dolor sit amet consectetuer adipiscing elit proin interdum mauris non,11/1/2024,819680,228
+4761,Grocery_2,urna pretium nisl ut volutpat sapien arcu sed augue aliquam erat volutpat,1/9/2014,79728,138
+4762,Automotive_3,maecenas pulvinar lobortis est phasellus sit amet erat nulla tempus vivamus in felis eu sapien,5/3/2019,625440,13
+4763,Beauty_1,turpis enim blandit mi in porttitor pede justo eu massa donec dapibus duis at velit eu est,7/12/2016,933819,63
+4764,Health_2,rutrum nulla tellus in sagittis dui vel nisl duis ac nibh fusce lacus purus aliquet at feugiat non,7/27/2002,46337,58
+4765,Clothing_6,maecenas pulvinar lobortis est phasellus sit amet erat nulla tempus vivamus in felis eu sapien cursus vestibulum proin eu mi,7/1/2018,390948,288
+4766,Shoes_3,cras mi pede malesuada in imperdiet et commodo vulputate justo in blandit ultrices enim lorem ipsum dolor sit amet consectetuer,10/29/2005,172017,199
+4767,Jewelry_2,diam id ornare imperdiet sapien urna pretium nisl ut volutpat,11/27/2022,285991,91
+4768,Movies_6,pellentesque ultrices phasellus id sapien in sapien iaculis congue vivamus metus arcu adipiscing,2/4/2021,866214,46
+4769,Health_3,et magnis dis parturient montes nascetur ridiculus mus etiam vel augue,10/23/2011,29268,110
+4770,Industrial_4,sed accumsan felis ut at dolor quis odio consequat varius,2/8/2016,200209,1
+4771,Grocery_3,congue vivamus metus arcu adipiscing molestie hendrerit at vulputate vitae nisl aenean lectus pellentesque eget,10/8/2021,752725,73
+4772,Tools_3,posuere cubilia curae duis faucibus accumsan odio curabitur convallis duis consequat dui,4/2/2006,841901,84
+4773,Garden_2,nisl venenatis lacinia aenean sit amet justo morbi ut odio cras mi,6/28/2010,364276,53
+4774,Computers_2,tortor quis turpis sed ante vivamus tortor duis mattis egestas metus aenean fermentum donec ut mauris eget,7/30/2021,17303,294
+4775,Health_4,semper sapien a libero nam dui proin leo odio porttitor id consequat in consequat,7/10/2008,683327,81
+4776,Grocery_4,nisi volutpat eleifend donec ut dolor morbi vel lectus in quam fringilla,5/20/2002,828175,70
+4777,Games_3,lacinia erat vestibulum sed magna at nunc commodo placerat praesent blandit nam nulla integer pede justo lacinia eget tincidunt,3/26/2008,711042,269
+4778,Jewelry_3,donec ut dolor morbi vel lectus in quam fringilla rhoncus mauris enim leo,8/29/2021,201582,188
+4779,Outdoors_4,commodo placerat praesent blandit nam nulla integer pede justo lacinia,3/4/2018,875623,191
+4780,Baby_3,lorem quisque ut erat curabitur gravida nisi at nibh in hac,2/1/2002,874006,163
+4781,Computers_3,ut blandit non interdum in ante vestibulum ante ipsum primis in faucibus orci luctus et ultrices,8/25/2014,880931,214
+4782,Movies_7,tellus nisi eu orci mauris lacinia sapien quis libero nullam sit amet turpis elementum ligula,6/23/2016,904726,230
+4783,Tools_4,ac leo pellentesque ultrices mattis odio donec vitae nisi nam ultrices,8/30/2010,155012,131
+4784,Industrial_5,nulla facilisi cras non velit nec nisi vulputate nonummy maecenas tincidunt lacus at,9/12/2010,676237,231
+4785,Home_1,rutrum nulla nunc purus phasellus in felis donec semper sapien a libero,7/17/2006,470941,275
+4786,Clothing_7,sollicitudin vitae consectetuer eget rutrum at lorem integer tincidunt ante vel ipsum praesent blandit,5/25/2005,639321,239
+4787,Tools_5,proin at turpis a pede posuere nonummy integer non velit donec diam neque vestibulum eget vulputate ut,5/16/2009,437390,24
+4788,Electronics_2,tempus vivamus in felis eu sapien cursus vestibulum proin eu mi nulla ac enim in tempor,5/30/2011,515354,110
+4789,Health_5,primis in faucibus orci luctus et ultrices posuere cubilia curae nulla dapibus dolor vel est donec odio,8/20/2021,447740,131
+4790,Kids_2,odio condimentum id luctus nec molestie sed justo pellentesque viverra pede ac diam,4/24/2007,293957,189
+4791,Jewelry_4,viverra pede ac diam cras pellentesque volutpat dui maecenas tristique,11/5/2009,25311,206
+4792,Beauty_2,convallis nulla neque libero convallis eget eleifend luctus ultricies eu nibh quisque,5/12/2009,485448,219
+4793,Computers_4,nam congue risus semper porta volutpat quam pede lobortis ligula sit amet eleifend pede libero quis orci nullam molestie,8/20/2018,583600,171
+4794,Movies_8,aliquam convallis nunc proin at turpis a pede posuere nonummy integer non,6/18/2014,534020,149
+4795,Games_4,lectus aliquam sit amet diam in magna bibendum imperdiet nullam,10/5/2010,817368,198
+4796,Grocery_5,quam fringilla rhoncus mauris enim leo rhoncus sed vestibulum sit amet cursus,1/30/2011,523355,283
+4797,Electronics_3,erat quisque erat eros viverra eget congue eget semper rutrum nulla nunc purus phasellus in felis donec semper sapien,3/1/2020,40698,270
+4798,Tools_6,mauris non ligula pellentesque ultrices phasellus id sapien in sapien iaculis congue vivamus,3/26/2007,710510,219
+4799,Kids_3,massa id lobortis convallis tortor risus dapibus augue vel accumsan tellus nisi eu,7/7/2011,675542,138
+4800,Games_5,sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus mus vivamus vestibulum sagittis sapien cum sociis natoque penatibus et,3/8/2024,71745,254
+4801,Tools_7,nec nisi vulputate nonummy maecenas tincidunt lacus at velit vivamus vel nulla eget eros elementum pellentesque quisque porta,12/24/2019,278364,152
+4802,Home_2,nulla mollis molestie lorem quisque ut erat curabitur gravida nisi at nibh in,6/1/2013,16875,128
+4803,Baby_4,eros suspendisse accumsan tortor quis turpis sed ante vivamus tortor,7/29/2003,308833,166
+4804,Movies_9,at turpis a pede posuere nonummy integer non velit donec diam neque,8/3/2005,363943,228
+4805,Tools_8,pulvinar lobortis est phasellus sit amet erat nulla tempus vivamus in felis eu sapien cursus,2/27/2015,822766,289
+4806,Industrial_6,turpis eget elit sodales scelerisque mauris sit amet eros suspendisse accumsan tortor quis,4/20/2010,370162,268
+4807,Books_3,sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus mus vivamus vestibulum sagittis sapien cum sociis,8/8/2003,665277,25
+4808,Automotive_4,odio consequat varius integer ac leo pellentesque ultrices mattis odio donec vitae,12/11/2005,193855,284
+4809,Music_1,nibh fusce lacus purus aliquet at feugiat non pretium quis lectus suspendisse potenti in eleifend quam,9/29/2010,849080,219
+4810,Automotive_5,tortor id nulla ultrices aliquet maecenas leo odio condimentum id luctus nec molestie sed justo pellentesque viverra pede,11/23/2010,828391,273
+4811,Outdoors_5,pharetra magna ac consequat metus sapien ut nunc vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere,4/1/2004,126348,22
+4812,Garden_3,rutrum at lorem integer tincidunt ante vel ipsum praesent blandit lacinia erat vestibulum sed magna,12/11/2024,358058,29
+4813,Garden_4,ut massa volutpat convallis morbi odio odio elementum eu interdum eu tincidunt in leo maecenas pulvinar lobortis est,2/27/2006,315475,247
+4814,Grocery_6,pharetra magna vestibulum aliquet ultrices erat tortor sollicitudin mi sit amet lobortis sapien sapien non mi integer ac neque duis,4/14/2024,666097,38
+4815,Jewelry_5,sapien in sapien iaculis congue vivamus metus arcu adipiscing molestie hendrerit at vulputate vitae nisl,5/21/2006,808701,78
+4816,Outdoors_6,penatibus et magnis dis parturient montes nascetur ridiculus mus vivamus vestibulum sagittis sapien cum sociis natoque,4/21/2002,268667,175
+4817,Electronics_4,in hac habitasse platea dictumst maecenas ut massa quis augue luctus tincidunt nulla mollis molestie lorem quisque ut erat,5/11/2018,835574,290
+4818,Home_3,aenean lectus pellentesque eget nunc donec quis orci eget orci vehicula condimentum curabitur in libero ut massa volutpat,2/22/2012,30538,233
+4819,Movies_10,cras non velit nec nisi vulputate nonummy maecenas tincidunt lacus at velit vivamus,1/28/2016,499323,255
+4820,Music_2,tempus semper est quam pharetra magna ac consequat metus sapien ut nunc vestibulum ante ipsum primis in faucibus orci luctus,5/8/2012,376573,242
+4821,Jewelry_6,auctor gravida sem praesent id massa id nisl venenatis lacinia aenean sit amet justo morbi,4/24/2003,851723,163
+4822,Automotive_6,erat vestibulum sed magna at nunc commodo placerat praesent blandit nam,5/18/2010,764080,274
+4823,Jewelry_7,et magnis dis parturient montes nascetur ridiculus mus etiam vel augue vestibulum,3/1/2019,186000,91
+4824,Beauty_3,pede ullamcorper augue a suscipit nulla elit ac nulla sed vel enim sit,2/16/2005,26772,50
+4825,Beauty_4,ut blandit non interdum in ante vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere,1/3/2001,934207,242
+4826,Toys_2,ut volutpat sapien arcu sed augue aliquam erat volutpat in congue etiam justo,3/23/2022,810944,211
+4827,Shoes_4,elit ac nulla sed vel enim sit amet nunc viverra dapibus nulla,1/27/2010,463308,34
+4828,Books_4,aliquam convallis nunc proin at turpis a pede posuere nonummy integer non velit donec diam neque,12/18/2005,147315,198
+4829,Books_5,in blandit ultrices enim lorem ipsum dolor sit amet consectetuer adipiscing elit,7/6/2020,569819,57
+4830,Movies_11,nulla sed vel enim sit amet nunc viverra dapibus nulla suscipit ligula in lacus curabitur at ipsum ac,5/26/2003,985176,239
+4831,Jewelry_8,purus eu magna vulputate luctus cum sociis natoque penatibus et magnis dis parturient montes nascetur,6/28/2016,638590,21
+4832,Grocery_7,leo maecenas pulvinar lobortis est phasellus sit amet erat nulla,1/13/2014,922630,33
+4833,Garden_5,eleifend quam a odio in hac habitasse platea dictumst maecenas ut massa quis augue luctus tincidunt nulla mollis molestie lorem,1/23/2013,953371,98
+4834,Grocery_8,a suscipit nulla elit ac nulla sed vel enim sit,3/29/2023,743181,223
+4835,Beauty_5,sollicitudin vitae consectetuer eget rutrum at lorem integer tincidunt ante vel ipsum praesent,8/18/2001,373283,114
+4836,Shoes_5,erat volutpat in congue etiam justo etiam pretium iaculis justo in hac habitasse platea dictumst etiam faucibus cursus,6/26/2022,426878,140
+4837,Tools_9,quisque porta volutpat erat quisque erat eros viverra eget congue eget semper rutrum,8/23/2010,528221,268
+4838,Sports_3,at vulputate vitae nisl aenean lectus pellentesque eget nunc donec quis orci eget orci vehicula condimentum curabitur,8/14/2012,166283,142
+4839,Sports_4,posuere cubilia curae duis faucibus accumsan odio curabitur convallis duis consequat dui nec nisi volutpat eleifend,12/7/2010,125530,231
+4840,Games_6,quis tortor id nulla ultrices aliquet maecenas leo odio condimentum id luctus nec molestie,1/1/2003,88052,70
+4841,Garden_6,non pretium quis lectus suspendisse potenti in eleifend quam a,4/3/2011,138600,38
+4842,Music_3,praesent id massa id nisl venenatis lacinia aenean sit amet justo morbi ut odio cras mi pede malesuada in,10/30/2012,680227,154
+4843,Electronics_5,sed vel enim sit amet nunc viverra dapibus nulla suscipit ligula in lacus curabitur at ipsum ac tellus semper interdum,12/19/2014,263234,116
+4844,Automotive_7,mauris eget massa tempor convallis nulla neque libero convallis eget eleifend,1/18/2022,450697,242
+4845,Industrial_7,arcu sed augue aliquam erat volutpat in congue etiam justo,11/23/2002,133142,181
+4846,Sports_5,neque sapien placerat ante nulla justo aliquam quis turpis eget elit sodales scelerisque mauris sit amet eros suspendisse accumsan tortor,6/6/2004,588597,153
+4847,Baby_5,hac habitasse platea dictumst maecenas ut massa quis augue luctus tincidunt nulla mollis molestie lorem quisque ut erat,1/1/2001,586626,106
+4848,Toys_3,tincidunt nulla mollis molestie lorem quisque ut erat curabitur gravida nisi at,12/31/2005,336240,54
+4849,Electronics_6,sapien urna pretium nisl ut volutpat sapien arcu sed augue aliquam erat volutpat in congue,7/21/2020,281466,121
+4850,Toys_4,lobortis est phasellus sit amet erat nulla tempus vivamus in felis eu sapien cursus vestibulum proin,1/30/2004,309614,190
+4851,Industrial_8,augue vestibulum rutrum rutrum neque aenean auctor gravida sem praesent id massa id nisl venenatis lacinia aenean sit amet,11/8/2018,226672,133
+4852,Shoes_6,eleifend pede libero quis orci nullam molestie nibh in lectus pellentesque at nulla suspendisse potenti,11/18/2007,886453,120
+4853,Sports_6,aenean lectus pellentesque eget nunc donec quis orci eget orci vehicula condimentum curabitur in libero,12/18/2014,709794,166
+4854,Movies_12,etiam justo etiam pretium iaculis justo in hac habitasse platea dictumst,7/15/2012,227770,36
+4855,Garden_7,blandit nam nulla integer pede justo lacinia eget tincidunt eget tempus vel pede morbi porttitor lorem id ligula,10/8/2020,725011,75
+4856,Garden_8,donec ut dolor morbi vel lectus in quam fringilla rhoncus,6/27/2012,693325,185
+4857,Electronics_7,ultrices erat tortor sollicitudin mi sit amet lobortis sapien sapien non mi integer ac,6/21/2013,144560,96
+4858,Kids_4,posuere metus vitae ipsum aliquam non mauris morbi non lectus,2/14/2006,424693,200
+4859,Kids_5,porttitor pede justo eu massa donec dapibus duis at velit,7/13/2001,596928,83
+4860,Jewelry_9,tincidunt ante vel ipsum praesent blandit lacinia erat vestibulum sed magna at,5/17/2009,145501,102
+4861,Toys_5,placerat ante nulla justo aliquam quis turpis eget elit sodales scelerisque mauris sit amet eros suspendisse accumsan,7/25/2001,848258,199
+4862,Garden_9,diam neque vestibulum eget vulputate ut ultrices vel augue vestibulum ante,1/27/2011,655011,104
+4863,Automotive_8,ipsum dolor sit amet consectetuer adipiscing elit proin interdum mauris non ligula pellentesque ultrices phasellus id sapien in sapien,9/10/2007,420216,93
+4864,Home_4,ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae mauris viverra diam vitae quam,5/13/2006,748571,53
+4865,Clothing_8,neque sapien placerat ante nulla justo aliquam quis turpis eget elit sodales scelerisque mauris sit amet eros suspendisse,9/12/2023,756147,206
+4866,Computers_5,habitasse platea dictumst maecenas ut massa quis augue luctus tincidunt nulla mollis,2/5/2007,522573,297
+4867,Home_5,nec euismod scelerisque quam turpis adipiscing lorem vitae mattis nibh ligula nec sem,8/17/2012,859249,271
+4868,Baby_6,cras pellentesque volutpat dui maecenas tristique est et tempus semper est,11/10/2023,882476,251
+4869,Movies_13,etiam pretium iaculis justo in hac habitasse platea dictumst etiam faucibus cursus urna ut tellus,4/29/2006,739334,275
+4870,Jewelry_10,nulla nunc purus phasellus in felis donec semper sapien a libero nam dui proin,9/13/2001,91553,121
+4871,Clothing_9,in purus eu magna vulputate luctus cum sociis natoque penatibus et,3/2/2019,728544,4
+4872,Industrial_9,ac neque duis bibendum morbi non quam nec dui luctus rutrum nulla tellus in sagittis dui vel nisl duis ac,6/18/2015,733932,243
+4873,Kids_6,ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae nulla dapibus dolor vel est donec odio justo,8/27/2018,807856,33
+4874,Music_4,diam cras pellentesque volutpat dui maecenas tristique est et tempus semper est quam pharetra magna ac consequat metus sapien,12/1/2001,370869,50
+4875,Toys_6,augue luctus tincidunt nulla mollis molestie lorem quisque ut erat curabitur gravida nisi at nibh in,10/6/2023,61694,143
+4876,Games_7,integer tincidunt ante vel ipsum praesent blandit lacinia erat vestibulum sed magna at nunc commodo placerat praesent blandit nam,4/7/2015,644197,27
+4877,Electronics_8,dictumst etiam faucibus cursus urna ut tellus nulla ut erat id mauris vulputate elementum nullam varius nulla facilisi,9/25/2010,571954,109
+4878,Home_6,nisi eu orci mauris lacinia sapien quis libero nullam sit amet,6/28/2005,573223,131
+4879,Shoes_7,pulvinar sed nisl nunc rhoncus dui vel sem sed sagittis nam congue risus semper,1/25/2024,209379,31
+4880,Garden_10,metus vitae ipsum aliquam non mauris morbi non lectus aliquam sit amet diam in magna bibendum,7/10/2009,516315,245
+4881,Shoes_8,porta volutpat erat quisque erat eros viverra eget congue eget,5/28/2005,706921,201
+4882,Garden_11,consequat in consequat ut nulla sed accumsan felis ut at dolor quis odio,6/8/2015,699903,258
+4883,Industrial_10,ligula vehicula consequat morbi a ipsum integer a nibh in quis justo,6/27/2021,605640,222
+4884,Automotive_9,sem sed sagittis nam congue risus semper porta volutpat quam pede lobortis ligula sit amet,9/21/2021,481559,269
+4885,Jewelry_11,eget eros elementum pellentesque quisque porta volutpat erat quisque erat,11/19/2002,847506,236
+4886,Industrial_11,quisque ut erat curabitur gravida nisi at nibh in hac habitasse platea dictumst aliquam augue quam sollicitudin,9/4/2007,790101,47
+4887,Beauty_6,aliquam lacus morbi quis tortor id nulla ultrices aliquet maecenas leo odio condimentum id luctus nec,7/19/2005,114065,13
+4888,Books_6,mauris lacinia sapien quis libero nullam sit amet turpis elementum ligula vehicula consequat morbi a,8/18/2004,120029,97
+4889,Health_6,ac neque duis bibendum morbi non quam nec dui luctus rutrum nulla tellus in,2/25/2003,756247,163
+4890,Beauty_7,sit amet sem fusce consequat nulla nisl nunc nisl duis bibendum felis sed,4/19/2020,94898,228
+4891,Tools_10,integer non velit donec diam neque vestibulum eget vulputate ut ultrices vel augue vestibulum ante,10/18/2015,256248,45
+4892,Sports_7,in hac habitasse platea dictumst morbi vestibulum velit id pretium iaculis diam erat fermentum justo nec condimentum neque sapien placerat,9/8/2006,735595,244
+4893,Shoes_9,ultricies eu nibh quisque id justo sit amet sapien dignissim vestibulum vestibulum ante ipsum primis in faucibus orci luctus,6/30/2002,20367,225
+4894,Toys_7,vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae duis faucibus accumsan odio curabitur convallis duis,4/10/2013,728670,47
+4895,Games_8,et tempus semper est quam pharetra magna ac consequat metus sapien ut nunc vestibulum ante,10/30/2014,8166,279
+4896,Baby_7,nisi vulputate nonummy maecenas tincidunt lacus at velit vivamus vel nulla eget,4/8/2010,408420,287
+4897,Health_7,tortor duis mattis egestas metus aenean fermentum donec ut mauris eget,12/17/2002,307382,78
+4898,Beauty_8,pede posuere nonummy integer non velit donec diam neque vestibulum eget vulputate ut,1/11/2024,129957,24
+4899,Clothing_10,donec vitae nisi nam ultrices libero non mattis pulvinar nulla pede ullamcorper augue a,6/1/2023,650362,12
+4900,Jewelry_12,quis tortor id nulla ultrices aliquet maecenas leo odio condimentum id luctus nec molestie sed justo pellentesque,4/11/2024,483481,253
+4901,Toys_8,eget tempus vel pede morbi porttitor lorem id ligula suspendisse ornare consequat lectus in est,6/22/2001,185327,59
+4902,Home_7,feugiat et eros vestibulum ac est lacinia nisi venenatis tristique fusce congue diam id ornare imperdiet sapien urna,1/15/2011,698262,221
+4903,Electronics_9,ut massa quis augue luctus tincidunt nulla mollis molestie lorem quisque ut erat curabitur gravida nisi at,9/5/2017,565476,253
+4904,Automotive_10,interdum mauris non ligula pellentesque ultrices phasellus id sapien in sapien iaculis congue vivamus metus arcu,9/11/2013,940666,184
+4905,Electronics_10,potenti nullam porttitor lacus at turpis donec posuere metus vitae,10/15/2022,443887,91
+4906,Movies_14,ut nunc vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae mauris viverra,5/14/2024,665015,90
+4907,Toys_9,vel est donec odio justo sollicitudin ut suscipit a feugiat et eros vestibulum ac est lacinia,3/1/2017,572301,246
+4908,Garden_12,rhoncus aliquam lacus morbi quis tortor id nulla ultrices aliquet maecenas leo,1/22/2025,968978,121
+4909,Jewelry_13,pellentesque ultrices mattis odio donec vitae nisi nam ultrices libero non mattis pulvinar nulla pede ullamcorper augue,2/26/2005,566210,162
+4910,Industrial_12,consequat nulla nisl nunc nisl duis bibendum felis sed interdum venenatis turpis enim blandit mi in porttitor pede,2/6/2004,678277,299
+4911,Books_7,quis lectus suspendisse potenti in eleifend quam a odio in hac,2/13/2005,505653,121
+4912,Automotive_11,faucibus cursus urna ut tellus nulla ut erat id mauris vulputate elementum nullam varius,10/3/2001,731224,32
+4913,Sports_8,quis odio consequat varius integer ac leo pellentesque ultrices mattis odio donec,11/10/2020,178304,119
+4914,Automotive_12,amet eros suspendisse accumsan tortor quis turpis sed ante vivamus tortor duis,9/12/2015,942367,160
+4915,Movies_15,dolor sit amet consectetuer adipiscing elit proin risus praesent lectus vestibulum quam sapien varius,3/14/2004,64550,296
+4916,Garden_13,amet eleifend pede libero quis orci nullam molestie nibh in lectus pellentesque at nulla suspendisse potenti cras in purus eu,12/18/2003,892629,37
+4917,Toys_10,id lobortis convallis tortor risus dapibus augue vel accumsan tellus nisi eu orci mauris lacinia sapien,4/30/2023,664681,164
+4918,Books_8,morbi non quam nec dui luctus rutrum nulla tellus in sagittis dui vel nisl duis,9/10/2015,393356,149
+4919,Books_9,sit amet turpis elementum ligula vehicula consequat morbi a ipsum integer a nibh in quis justo,6/22/2006,849458,170
+4920,Automotive_13,felis ut at dolor quis odio consequat varius integer ac leo pellentesque ultrices mattis odio donec vitae nisi nam ultrices,9/16/2013,107848,63
+4921,Home_8,a suscipit nulla elit ac nulla sed vel enim sit amet nunc viverra dapibus nulla suscipit,5/9/2014,34781,109
+4922,Computers_6,lacus at velit vivamus vel nulla eget eros elementum pellentesque quisque porta volutpat,7/15/2008,208620,157
+4923,Health_8,integer ac leo pellentesque ultrices mattis odio donec vitae nisi nam ultrices,6/1/2012,259296,196
+4924,Outdoors_7,id sapien in sapien iaculis congue vivamus metus arcu adipiscing molestie hendrerit at vulputate vitae nisl aenean lectus pellentesque eget,12/12/2017,720419,81
+4925,Kids_7,nullam orci pede venenatis non sodales sed tincidunt eu felis fusce posuere felis sed lacus morbi sem mauris laoreet ut,7/26/2012,651402,6
+4926,Garden_14,nibh in hac habitasse platea dictumst aliquam augue quam sollicitudin,8/27/2007,273340,50
+4927,Music_5,neque libero convallis eget eleifend luctus ultricies eu nibh quisque,12/31/2009,587592,64
+4928,Garden_15,vel nulla eget eros elementum pellentesque quisque porta volutpat erat quisque erat eros viverra,12/3/2017,702073,209
+4929,Automotive_14,suspendisse ornare consequat lectus in est risus auctor sed tristique in tempus sit amet sem fusce consequat nulla,3/12/2017,276124,225
+4930,Electronics_11,auctor sed tristique in tempus sit amet sem fusce consequat nulla nisl,6/20/2010,76988,97
+4931,Electronics_12,turpis sed ante vivamus tortor duis mattis egestas metus aenean fermentum donec ut mauris eget,11/12/2008,138886,189
+4932,Toys_11,eget tincidunt eget tempus vel pede morbi porttitor lorem id ligula suspendisse ornare consequat lectus in est risus,7/2/2024,708388,39
+4933,Computers_7,amet lobortis sapien sapien non mi integer ac neque duis bibendum morbi non quam,11/15/2015,760737,168
+4934,Books_10,magna vulputate luctus cum sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus mus vivamus vestibulum sagittis sapien,10/30/2012,847014,210
+4935,Industrial_13,tempus vel pede morbi porttitor lorem id ligula suspendisse ornare consequat lectus in est risus auctor sed,12/9/2005,175595,167
+4936,Computers_8,id sapien in sapien iaculis congue vivamus metus arcu adipiscing molestie hendrerit at vulputate vitae nisl aenean lectus pellentesque eget,5/21/2020,470593,268
+4937,Music_6,tellus in sagittis dui vel nisl duis ac nibh fusce lacus purus,10/14/2007,829480,288
+4938,Shoes_10,congue etiam justo etiam pretium iaculis justo in hac habitasse platea dictumst etiam faucibus,12/10/2021,241210,157
+4939,Beauty_9,aliquet at feugiat non pretium quis lectus suspendisse potenti in,1/23/2016,147483,51
+4940,Beauty_10,turpis elementum ligula vehicula consequat morbi a ipsum integer a nibh,1/20/2021,470004,169
+4941,Grocery_9,ligula nec sem duis aliquam convallis nunc proin at turpis a pede posuere nonummy integer non velit donec diam neque,6/3/2008,770057,236
+4942,Grocery_10,ultrices enim lorem ipsum dolor sit amet consectetuer adipiscing elit proin interdum mauris non ligula pellentesque ultrices phasellus id sapien,11/7/2017,387487,248
+4943,Grocery_11,pellentesque viverra pede ac diam cras pellentesque volutpat dui maecenas tristique est et tempus semper,8/11/2001,990326,155
+4944,Shoes_11,ut mauris eget massa tempor convallis nulla neque libero convallis eget eleifend luctus ultricies,7/4/2006,851334,188
+4945,Sports_9,dui vel nisl duis ac nibh fusce lacus purus aliquet at feugiat non pretium quis,4/16/2012,250330,271
+4946,Books_11,magna at nunc commodo placerat praesent blandit nam nulla integer pede justo lacinia eget tincidunt eget tempus vel,7/21/2004,462151,105
+4947,Shoes_12,vivamus vel nulla eget eros elementum pellentesque quisque porta volutpat erat quisque erat,2/28/2005,189452,75
+4948,Books_12,sollicitudin ut suscipit a feugiat et eros vestibulum ac est lacinia nisi venenatis tristique fusce congue,12/2/2017,59868,149
+4949,Electronics_13,eleifend luctus ultricies eu nibh quisque id justo sit amet sapien dignissim vestibulum vestibulum ante,2/22/2004,326837,33
+4950,Kids_8,nisl duis bibendum felis sed interdum venenatis turpis enim blandit mi in porttitor pede justo eu massa donec,12/7/2020,679896,197
+4951,Computers_9,eget eleifend luctus ultricies eu nibh quisque id justo sit amet sapien dignissim vestibulum vestibulum ante ipsum primis,2/10/2016,783534,273
+4952,Toys_12,a feugiat et eros vestibulum ac est lacinia nisi venenatis,1/9/2002,54137,38
+4953,Beauty_11,purus eu magna vulputate luctus cum sociis natoque penatibus et,7/8/2006,861683,249
+4954,Automotive_15,rutrum at lorem integer tincidunt ante vel ipsum praesent blandit lacinia erat vestibulum sed magna at nunc commodo,11/17/2005,640520,88
+4955,Books_13,est donec odio justo sollicitudin ut suscipit a feugiat et eros vestibulum ac est,12/23/2019,549091,39
+4956,Kids_9,neque vestibulum eget vulputate ut ultrices vel augue vestibulum ante ipsum,2/20/2017,120490,295
+4957,Health_9,pretium quis lectus suspendisse potenti in eleifend quam a odio in hac,3/8/2002,316818,176
+4958,Automotive_16,non quam nec dui luctus rutrum nulla tellus in sagittis,11/16/2001,370585,192
+4959,Automotive_17,et ultrices posuere cubilia curae donec pharetra magna vestibulum aliquet ultrices,10/26/2009,354934,136
+4960,Music_7,convallis tortor risus dapibus augue vel accumsan tellus nisi eu orci mauris lacinia,1/30/2017,867742,285
+4961,Games_9,morbi ut odio cras mi pede malesuada in imperdiet et commodo vulputate justo in blandit ultrices enim lorem ipsum dolor,3/18/2018,243688,129
+4962,Home_9,vel sem sed sagittis nam congue risus semper porta volutpat quam pede lobortis ligula,11/25/2013,605599,53
+4963,Toys_13,mauris non ligula pellentesque ultrices phasellus id sapien in sapien iaculis congue vivamus metus arcu,6/9/2015,930640,122
+4964,Tools_11,dui luctus rutrum nulla tellus in sagittis dui vel nisl duis ac nibh fusce,4/29/2024,431038,209
+4965,Grocery_12,eu mi nulla ac enim in tempor turpis nec euismod scelerisque quam turpis adipiscing lorem vitae mattis,3/22/2015,34732,230
+4966,Books_14,lorem quisque ut erat curabitur gravida nisi at nibh in hac,6/27/2019,940006,3
+4967,Automotive_18,sapien arcu sed augue aliquam erat volutpat in congue etiam justo etiam pretium iaculis justo in,10/12/2019,432894,39
+4968,Books_15,eu tincidunt in leo maecenas pulvinar lobortis est phasellus sit,10/15/2012,351578,267
+4969,Home_10,congue vivamus metus arcu adipiscing molestie hendrerit at vulputate vitae nisl aenean lectus,1/30/2016,527978,135
+4970,Movies_16,nulla ut erat id mauris vulputate elementum nullam varius nulla facilisi cras non velit,12/21/2000,645183,22
+4971,Electronics_14,vehicula condimentum curabitur in libero ut massa volutpat convallis morbi odio odio elementum eu,6/6/2001,983243,218
+4972,Toys_14,suspendisse potenti cras in purus eu magna vulputate luctus cum sociis natoque penatibus et magnis dis,12/5/2014,528396,294
+4973,Outdoors_8,eu interdum eu tincidunt in leo maecenas pulvinar lobortis est phasellus sit amet erat nulla tempus,4/7/2018,745466,202
+4974,Clothing_11,varius nulla facilisi cras non velit nec nisi vulputate nonummy maecenas tincidunt lacus at velit,6/2/2015,173234,6
+4975,Games_10,orci luctus et ultrices posuere cubilia curae mauris viverra diam vitae quam suspendisse potenti,4/10/2004,76079,30
+4976,Grocery_13,cras pellentesque volutpat dui maecenas tristique est et tempus semper est quam pharetra magna ac consequat,3/2/2004,642276,184
+4977,Health_10,iaculis diam erat fermentum justo nec condimentum neque sapien placerat ante nulla justo aliquam,5/23/2002,306926,296
+4978,Home_11,vestibulum velit id pretium iaculis diam erat fermentum justo nec condimentum neque,9/6/2000,169413,139
+4979,Books_16,imperdiet sapien urna pretium nisl ut volutpat sapien arcu sed augue aliquam erat volutpat in,8/10/2002,396830,242
+4980,Games_11,venenatis tristique fusce congue diam id ornare imperdiet sapien urna,5/2/2002,720580,55
+4981,Books_17,nulla tellus in sagittis dui vel nisl duis ac nibh fusce lacus purus,9/22/2006,200272,186
+4982,Garden_16,vivamus in felis eu sapien cursus vestibulum proin eu mi nulla ac enim in tempor turpis nec,8/31/2000,448719,275
+4983,Shoes_13,nunc commodo placerat praesent blandit nam nulla integer pede justo,11/23/2014,686945,109
+4984,Toys_15,tempus sit amet sem fusce consequat nulla nisl nunc nisl duis bibendum felis sed interdum venenatis turpis enim blandit mi,12/25/2014,843542,37
+4985,Automotive_19,amet eros suspendisse accumsan tortor quis turpis sed ante vivamus tortor duis mattis egestas metus,5/23/2022,336991,70
+4986,Electronics_15,in hac habitasse platea dictumst maecenas ut massa quis augue luctus tincidunt nulla mollis molestie lorem quisque ut erat curabitur,4/9/2022,303030,205
+4987,Kids_10,penatibus et magnis dis parturient montes nascetur ridiculus mus vivamus vestibulum sagittis sapien cum sociis natoque penatibus et magnis,10/29/2016,588930,74
+4988,Games_12,elementum eu interdum eu tincidunt in leo maecenas pulvinar lobortis est phasellus sit amet erat nulla tempus,7/12/2005,568383,251
+4989,Grocery_14,vulputate vitae nisl aenean lectus pellentesque eget nunc donec quis,7/7/2012,813954,139
+4990,Clothing_12,posuere cubilia curae duis faucibus accumsan odio curabitur convallis duis consequat dui nec nisi volutpat,7/19/2004,144333,293
+4991,Books_18,imperdiet sapien urna pretium nisl ut volutpat sapien arcu sed augue,7/14/2019,795430,151
+4992,Clothing_13,sem mauris laoreet ut rhoncus aliquet pulvinar sed nisl nunc rhoncus dui vel,2/5/2017,837420,95
+4993,Computers_10,elementum eu interdum eu tincidunt in leo maecenas pulvinar lobortis,2/25/2016,732575,102
+4994,Shoes_14,ut odio cras mi pede malesuada in imperdiet et commodo vulputate justo in blandit ultrices enim lorem ipsum dolor,10/14/2023,136152,243
+4995,Jewelry_14,morbi vestibulum velit id pretium iaculis diam erat fermentum justo nec,6/20/2021,287560,122
+4996,Beauty_12,eu felis fusce posuere felis sed lacus morbi sem mauris laoreet ut rhoncus aliquet,9/30/2005,274684,210
+4997,Health_11,maecenas pulvinar lobortis est phasellus sit amet erat nulla tempus vivamus,3/1/2017,707825,262
+4998,Outdoors_9,ultrices posuere cubilia curae nulla dapibus dolor vel est donec odio justo sollicitudin ut suscipit a feugiat,3/10/2008,538616,13
+4999,Grocery_15,at nulla suspendisse potenti cras in purus eu magna vulputate luctus cum sociis natoque penatibus et magnis dis parturient,3/28/2006,83395,82
+5000,Baby_8,at nibh in hac habitasse platea dictumst aliquam augue quam sollicitudin vitae consectetuer eget rutrum at lorem integer tincidunt ante,8/13/2005,920578,275
+5001,Automotive_20,congue risus semper porta volutpat quam pede lobortis ligula sit amet eleifend,12/21/2004,967451,259
+5002,Automotive_21,pharetra magna vestibulum aliquet ultrices erat tortor sollicitudin mi sit amet lobortis sapien sapien non mi,8/27/2012,693807,175
+5003,Automotive_22,turpis donec posuere metus vitae ipsum aliquam non mauris morbi non lectus aliquam sit amet diam in magna,10/8/2015,939720,253
+5004,Games_13,aenean sit amet justo morbi ut odio cras mi pede malesuada,10/10/2015,918182,82
+5005,Shoes_15,in hac habitasse platea dictumst maecenas ut massa quis augue,5/25/2000,801608,31
+5006,Clothing_14,lacinia erat vestibulum sed magna at nunc commodo placerat praesent blandit nam nulla integer pede justo lacinia,10/6/2015,974297,113
+5007,Grocery_16,enim lorem ipsum dolor sit amet consectetuer adipiscing elit proin interdum,6/28/2021,870000,20
+5008,Tools_12,tristique in tempus sit amet sem fusce consequat nulla nisl nunc,9/22/2001,680855,286
+5009,Home_12,faucibus cursus urna ut tellus nulla ut erat id mauris vulputate,5/30/2001,875970,175
+5010,Garden_17,diam erat fermentum justo nec condimentum neque sapien placerat ante nulla justo aliquam quis turpis,4/24/2019,779435,186
+5011,Books_19,nibh ligula nec sem duis aliquam convallis nunc proin at turpis a pede posuere nonummy,9/19/2010,686501,44
+5012,Sports_10,sed sagittis nam congue risus semper porta volutpat quam pede lobortis ligula,2/21/2014,619636,163
+5013,Sports_11,vel nisl duis ac nibh fusce lacus purus aliquet at feugiat non pretium,12/4/2020,476736,125
+5014,Jewelry_15,risus praesent lectus vestibulum quam sapien varius ut blandit non interdum in ante,2/5/2020,972515,14
+5015,Books_20,sit amet lobortis sapien sapien non mi integer ac neque duis bibendum morbi non quam nec dui luctus,12/19/2000,378929,272
+5016,Outdoors_10,venenatis lacinia aenean sit amet justo morbi ut odio cras mi pede malesuada in imperdiet et commodo vulputate,7/19/2003,750081,53
+5017,Health_12,auctor sed tristique in tempus sit amet sem fusce consequat nulla nisl nunc nisl duis bibendum,1/4/2019,255525,89
+5018,Computers_11,erat nulla tempus vivamus in felis eu sapien cursus vestibulum proin eu mi nulla ac enim in,5/28/2009,366161,66
+5019,Movies_17,felis donec semper sapien a libero nam dui proin leo odio porttitor id consequat in consequat ut,8/5/2009,311520,137
+5020,Kids_11,turpis adipiscing lorem vitae mattis nibh ligula nec sem duis aliquam convallis nunc proin at turpis,1/16/2024,798633,200
+5021,Games_14,hendrerit at vulputate vitae nisl aenean lectus pellentesque eget nunc donec quis,10/17/2005,843653,144
+5022,Toys_16,vel accumsan tellus nisi eu orci mauris lacinia sapien quis libero nullam sit amet turpis,2/8/2003,976439,43
+5023,Jewelry_16,dapibus augue vel accumsan tellus nisi eu orci mauris lacinia sapien quis libero nullam sit,12/5/2023,560796,35
+5024,Jewelry_17,quisque erat eros viverra eget congue eget semper rutrum nulla nunc purus phasellus in felis donec,9/24/2019,781568,75
+5025,Grocery_17,commodo placerat praesent blandit nam nulla integer pede justo lacinia eget tincidunt eget tempus vel pede morbi,10/21/2019,446635,64
+5026,Outdoors_11,sit amet justo morbi ut odio cras mi pede malesuada in imperdiet et commodo vulputate justo in blandit,3/16/2020,481003,172
+5027,Jewelry_18,sapien a libero nam dui proin leo odio porttitor id consequat in consequat ut nulla,1/12/2003,219271,265
+5028,Clothing_15,sit amet sapien dignissim vestibulum vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae,7/18/2012,729551,90
+5029,Automotive_23,nisl venenatis lacinia aenean sit amet justo morbi ut odio cras mi pede malesuada,7/30/2002,357500,280
+5030,Tools_13,leo rhoncus sed vestibulum sit amet cursus id turpis integer aliquet massa id lobortis convallis tortor risus dapibus,12/19/2007,466565,271
+5031,Toys_17,sapien a libero nam dui proin leo odio porttitor id consequat in consequat ut nulla sed accumsan,7/12/2007,691996,186
+5032,Electronics_16,pellentesque eget nunc donec quis orci eget orci vehicula condimentum curabitur in libero ut massa volutpat,11/8/2010,922628,166
+5033,Shoes_16,sapien in sapien iaculis congue vivamus metus arcu adipiscing molestie hendrerit at vulputate vitae nisl aenean,6/28/2009,597508,263
+5034,Electronics_17,nunc viverra dapibus nulla suscipit ligula in lacus curabitur at ipsum ac tellus semper interdum mauris,3/20/2015,869716,81
+5035,Movies_18,curabitur gravida nisi at nibh in hac habitasse platea dictumst aliquam augue quam sollicitudin,7/25/2017,224723,226
+5036,Grocery_18,ante nulla justo aliquam quis turpis eget elit sodales scelerisque mauris,8/15/2023,789586,170
+5037,Computers_12,in blandit ultrices enim lorem ipsum dolor sit amet consectetuer adipiscing elit proin interdum mauris non,9/23/2018,125047,9
+5038,Outdoors_12,cras mi pede malesuada in imperdiet et commodo vulputate justo in blandit ultrices,9/30/2004,544984,132
+5039,Shoes_17,interdum eu tincidunt in leo maecenas pulvinar lobortis est phasellus sit amet erat,8/5/2018,347368,180
+5040,Beauty_13,cras mi pede malesuada in imperdiet et commodo vulputate justo in blandit ultrices enim lorem ipsum dolor sit,7/19/2022,194542,48
+5041,Garden_18,pede posuere nonummy integer non velit donec diam neque vestibulum eget vulputate ut ultrices vel,5/14/2007,596125,276
+5042,Clothing_16,at nulla suspendisse potenti cras in purus eu magna vulputate luctus cum sociis natoque,10/27/2013,633497,71
+5043,Tools_14,nunc commodo placerat praesent blandit nam nulla integer pede justo lacinia eget tincidunt eget tempus vel pede morbi porttitor lorem,10/27/2014,247766,39
+5044,Sports_12,erat quisque erat eros viverra eget congue eget semper rutrum,12/28/2004,309030,59
+5045,Toys_18,risus praesent lectus vestibulum quam sapien varius ut blandit non interdum,4/7/2006,681428,30
+5046,Automotive_24,luctus nec molestie sed justo pellentesque viverra pede ac diam cras pellentesque volutpat dui maecenas tristique est et tempus,2/26/2009,972369,168
+5047,Shoes_18,fusce congue diam id ornare imperdiet sapien urna pretium nisl,8/8/2001,535684,191
+5048,Games_15,mus etiam vel augue vestibulum rutrum rutrum neque aenean auctor gravida sem praesent id massa id nisl venenatis lacinia,6/26/2019,118777,60
+5049,Beauty_14,a suscipit nulla elit ac nulla sed vel enim sit amet nunc,5/19/2002,293006,29
+5050,Health_13,ultrices erat tortor sollicitudin mi sit amet lobortis sapien sapien non mi integer ac neque duis bibendum morbi non,10/23/2004,99407,99

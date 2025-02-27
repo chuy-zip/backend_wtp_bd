@@ -1,0 +1,296 @@
+relationships = [
+      {
+      "from": "User",
+      "to": "Post",
+      "relation_name": "CREATED",
+      "attributes": [
+        {
+          "name": "visibility",
+          "type": "string",
+          "values": ["public", "private"]
+        },
+        {
+          "name": "source",
+          "type": "string",
+          "values": ["mobile", "web"]
+        },
+        {
+          "name": "time_stamp",
+          "type": "timeStamp"
+        }
+      ]
+    },
+    {
+      "from": "User",
+      "to": "Post",
+      "relation_name": "LIKES",
+      "attributes": [
+        {
+          "name": "browser",
+          "type": "string",
+          "values": ["Chrome", "Safari"]
+        },
+        {
+          "name": "source",
+          "type": "string",
+          "values": ["mobile", "web"]
+        },
+        {
+          "name": "time",
+          "type": "timeStamp"
+        }
+      ]
+    },
+    {
+      "from": "User",
+      "to": "Post",
+      "relation_name": "DISLIKES",
+      "attributes": [
+        {
+          "name": "time_stamp",
+          "type": "timeStamp"
+        },
+        {
+          "name": "browser",
+          "type": "string",
+          "values": ["Chrome", "Safari"]
+        },
+        {
+          "name": "source",
+          "type": "string",
+          "values": ["mobile", "web"]
+        }
+      ]
+    },
+    {
+      "from": "User",
+      "to": "User",
+      "relation_name": "FOLLOWS",
+      "attributes": [
+        {
+          "name": "since",
+          "type": "date"
+        },
+        {
+          "name": "follow_type",
+          "type": "string",
+          "values": ["close_friend", "casual"]
+        },
+        {
+          "name": "notifications",
+          "type": "bool",
+          "values": [True, False]
+        }
+      ]
+    },
+    {
+      "from": "User",
+      "to": "User",
+      "relation_name": "BLOCKED",
+      "attributes": [
+        {
+          "name": "time_stamp",
+          "type": "timeStamp"
+        },
+        {
+          "name": "reason",
+          "type": "string",
+          "values": ["offensive", "spam", "not_interested"]
+        },
+        {
+          "name": "is_permanent",
+          "type": "bool",
+          "values": [True, False]
+        }
+      ]
+    },
+    {
+      "from": "User",
+      "to": "Comment",
+      "relation_name": "LIKES",
+      "attributes": [
+        {
+          "name": "browser",
+          "type": "string",
+          "values": ["Chrome", "Safari"]
+        },
+        {
+          "name": "source",
+          "type": "string",
+          "values": ["mobile", "web"]
+        },
+        {
+          "name": "time",
+          "type": "timeStamp"
+        }
+      ]
+    },
+    {
+      "from": "User",
+      "to": "Comment",
+      "relation_name": "DISLIKES",
+      "attributes": [
+          {
+          "name": "time",
+          "type": "timeStamp"
+        },
+        {
+          "name": "browser",
+          "type": "string",
+          "values": ["Chrome", "Safari"]
+        },
+        {
+          "name": "source",
+          "type": "string",
+          "values": ["mobile", "web"]
+        }
+      ]
+    },
+    {
+      "from": "User",
+      "to": "Comment",
+      "relation_name": "WROTE",
+      "attributes": [
+        {
+          "name": "time_stamp",
+          "type": "timeStamp"
+        },
+        {
+          "name": "language",
+          "type": "string",
+          "values": ["English", "Spanish", "French", "German"]
+        },
+        {
+          "name": "edited",
+          "type": "bool",
+          "values": [True, False]
+        }
+      ]
+    },
+    {
+      "from": "User",
+      "to": "Topic",
+      "relation_name": "CREATED",
+      "attributes": [
+        {
+          "name": "visibility",
+          "type": "string",
+          "values": ["public", "private"]
+        },
+        {
+          "name": "source",
+          "type": "string",
+          "values": ["mobile", "web"]
+        },
+        {
+          "name": "time_stamp",
+          "type": "timeStamp"
+        }
+      ]
+    },
+    {
+      "from": "User",
+      "to": "Topic",
+      "relation_name": "INTERESTED",
+      "attributes": [
+        {
+          "name": "time_stamp",
+          "type": "timeStamp"
+        },
+        {
+          "name": "interest_level",
+          "type": "float",
+          "min": 1.0,
+          "max": 10.0
+        },
+        {
+          "name": "visit_count",
+          "type": "int",
+          "min": 1,
+          "max": 100
+        }
+      ]
+    },
+    {
+      "from": "User",
+      "to": "Country",
+      "relation_name": "FROM",
+      "attributes": [
+        {
+          "name": "leftNodeActive",
+          "type": "bool",
+          "values": [True, False]
+        },
+        {
+          "name": "year",
+          "type": "date"
+        },
+        {
+          "name": "day",
+          "type": "date"
+        }
+      ]
+    },
+    {
+      "from": "Post",
+      "to": "Topic",
+      "relation_name": "RELATED",
+      "attributes": [
+        {
+          "name": "year",
+          "type": "date"
+        },
+        {
+          "name": "day",
+          "type": "date"
+        },
+        {
+          "name": "relevance",
+          "type": "int",
+          "min": 1,
+          "max": 10
+        }
+      ]
+    },
+    {
+      "from": "Comment",
+      "to": "Post",
+      "relation_name": "BELONGS_TO",
+      "attributes": [
+        {
+          "name": "time_stamp",
+          "type": "timeStamp"
+        },
+        {
+          "name": "writter_is_active",
+          "type": "bool",
+          "values": [True, False]
+        },
+        {
+          "name": "is_pinned",
+          "type": "bool",
+          "values": [True, False]
+        }
+      ]
+    },
+    {
+      "from": "Topic",
+      "to": "Country",
+      "relation_name": "FROM",
+      "attributes": [
+        {
+          "name": "leftNodeActive",
+          "type": "bool",
+          "values": [True, False]
+        },
+        {
+          "name": "year",
+          "type": "date"
+        },
+        {
+          "name": "day",
+          "type": "date"
+        }
+      ]
+    }
+]
