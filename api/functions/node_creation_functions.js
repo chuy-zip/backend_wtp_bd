@@ -121,7 +121,7 @@ export async function createComment(text, reposted = false, postId, username, wr
     }
 }
 
-
+// TODO: modificarlo para crear de una la relacion con el usuario que lo creó
 export async function createTopic( name, description) {
     /**
      * Create a Topic node with specified attributes.
@@ -188,3 +188,7 @@ export async function createCountry(name, description, continent, language, coun
         await session.close();
     }
 }
+
+// TODO: funcion para relacionar un topic con un post
+// TODO: funcion de like y dislikes (tienen que traer el autoincremento de los valores en post/comentario)
+// TODO: funcion de followers and following (tienen que traer el autoincremento de los valores en user)
