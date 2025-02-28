@@ -19,19 +19,21 @@ export async function getUserByUsername(username) {
 
     try {
         const query = `
-        MATCH (u:User {user_name: $username})
-        RETURN u;
+        MATCH (u:User {user_name: $username})-[:FROM]-(country:Country)
+        RETURN u, country;
         `;
 
         const result = await session.run(query, { username });
 
         if (result.records.length > 0) {
             const user = convertProperties(result.records[0].get('u').properties);
-            console.log('User found:', user);
-            return { status: 'found', user };
+            const country = convertProperties(result.records[0].get('country').properties);
+
+            console.log('User found:', user, 'Country:', country);
+            return { status: 'found', user, country };
         } else {
             console.log('User not found.');
-            return { status: 'not_found', user: null };
+            return { status: 'not_found', user: null, country: null };
         }
     } catch (error) {
         console.error('Error fetching user:', error);
@@ -111,3 +113,91 @@ export async function getPostCommentsByID(postId) {
         await session.close();
     }
 }
+
+export async function getUniqueCountries() {
+    const driver = getDriver();
+    const session = driver.session();
+
+    try {
+        const query = `
+        MATCH (country:Country)
+        RETURN DISTINCT country;
+        `;
+
+        const result = await session.run(query);
+
+        if (result.records.length > 0) {
+            const countries = result.records.map(record => convertProperties(record.get('country').properties));
+            return { status: 'found', countries };
+        } else {
+            return { status: 'not_found', countries: [] };
+        }
+    } catch (error) {
+        console.error('Error fetching unique countries:', error);
+        throw error;
+    } finally {
+        await session.close();
+    }
+}
+
+export async function addUserInterest(username, topicName) {
+    const driver = getDriver();
+    const session = driver.session();
+
+    try {
+        const query = `
+        MATCH (user:User {user_name: $username}), (topic:Topic {name: $topicName})
+        MERGE (user)-[:INTERESTED]->(topic)
+        RETURN user, topic;
+        `;
+
+        const result = await session.run(query, { username, topicName });
+
+        if (result.records.length > 0) {
+            return { status: 'success', message: 'Interest added', user: username, topic: topicName };
+        } else {
+            return { status: 'error', message: 'User or Topic not found' };
+        }
+    } catch (error) {
+        console.error('Error adding interest:', error);
+        return { status: 'error', message: 'An error occurred', error: error.message };
+    } finally {
+        await session.close();
+    }
+}
+
+export async function changeUserCountry(username, newCountry) {
+    const driver = getDriver();
+    const session = driver.session();
+  
+    try {
+      // Definir el query
+      const query = `
+        MATCH (user:User {user_name: $username})-[initial_FROM:FROM]-(country:Country)
+        DELETE initial_FROM
+        MERGE (user)-[new_FROM:FROM]->(country2:Country {name: $newCountry})
+        RETURN user, new_FROM, country2;
+      `;
+  
+      // Ejecutar el query con los parámetros
+      const result = await session.run(query, {
+        username, 
+        newCountry
+      });
+  
+      if (result.records.length > 0) {
+        const user = result.records[0].get('user').properties;
+        const country2 = result.records[0].get('country2').properties;
+        console.log('User country updated:', user, country2);
+        return { status: 'success', user, country2 };
+      } else {
+        console.log('No user found or country not updated');
+        return { status: 'failure', message: 'No user found or country not updated' };
+      }
+    } catch (error) {
+      console.error('Error changing user country:', error);
+      throw error;
+    } finally {
+      await session.close();
+    }
+  }
