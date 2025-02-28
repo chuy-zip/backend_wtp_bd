@@ -1,6 +1,11 @@
 import express from 'express';
 import { testConnection, getNodes } from './functions/test.js';
-import { getUserByUsername, getPostsWithLimit, getPostCommentsByID} from './functions/chuy.js';
+import { createPost , createUser, createComment, /*, createTopic, createCountry*/} from './functions/node_creation_functions.js'
+
+
+import { getPostCommentsByID, getPostsWithLimit, getUserByUsername } from './functions/chuy.js';
+
+
 const port = 3000
 
 const app = express();
@@ -33,8 +38,98 @@ app.get('/api/neoTest', async (req, res) => {
   }
 });
 
+// NODE CREATION
+// create node post
+// por editar
+app.post('/api/createPost', async (req, res) => {
+  try {
+    const {username, text, imagen, hashtags, reposted } = req.body;
+    await createPost(username, text, imagen, hashtags, reposted);
+    res.status(201).json({ message: 'Post created successfully' });
+
+
+
+
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Register practicamente
+app.post('/api/registerUser', async (req, res) => {
+
+  try {
+    const { username, password, email, born, first_name, last_name, gender } = req.body;
+    await createUser(username, password, email, born, first_name, last_name, gender);
+    res.status(201).json({ message: 'User created successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// comment in a post
+app.post('/api/comment', async (req, res) => {
+  try {
+    const { text, reposted, postId, username, writterIsActive, isPinned, language } = req.body;
+    await createComment(text, reposted, postId, username, writterIsActive, isPinned, language)
+    res.status(201).json({ message: 'Comment created successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
+
+app.get('/api/get-user/:username', async (req, res) => {
+  const { username } = req.params;
+
+  try {
+    const result = await getUserByUsername(username);
+
+    if (result.status === 'found') {
+      res.status(200).json({ message: 'User found', user: result.user });
+    } else {
+      res.status(404).json({ message: 'User not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'An error occurred', error: error.message });
+  }
+});
+
+app.get('/api/get-posts/:posts_limit', async (req, res) => {
+  const { posts_limit } = req.params;
+
+  try {
+    const result = await getPostsWithLimit(posts_limit);
+
+    if (result.status === 'success') {
+      res.status(200).json({ message: 'Found posts', posts: result.posts });
+    } else {
+      res.status(404).json({ message: 'Posts not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'An error occurred', error: error.message });
+  }
+});
+
+app.get('/api/get-comments/:postId', async (req, res) => {
+  const { postId } = req.params;
+
+  try {
+    const postIdNumber = parseInt(postId, 10);
+
+    const result = await getPostCommentsByID(postIdNumber);
+
+    if (result.status === 'found') {
+      res.status(200).json({ message: 'found', comments: result.comments });
+    } else {
+      res.status(404).json({ message: 'not_found', comments: result.comments });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'An error occurred', error: error.message });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server listening at http://127.0.0.1:${port}`)
 })
-
-export default app;

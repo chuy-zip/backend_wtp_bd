@@ -1,23 +1,32 @@
 import neo4j from 'neo4j-driver';
 import getDriver from '../neoDriver.js';
 
+// Función para convertir números de Neo4j a números normales
+function convertNeo4jNumber(value) {
+    return neo4j.isInt(value) ? value.toNumber() : value;
+}
+
+// Función para convertir todas las propiedades de un nodo
+function convertProperties(properties) {
+    return Object.fromEntries(
+        Object.entries(properties).map(([key, value]) => [key, convertNeo4jNumber(value)])
+    );
+}
+
 export async function getUserByUsername(username) {
     const driver = getDriver();
     const session = driver.session();
 
     try {
-        // Define the query to find a user by username
         const query = `
         MATCH (u:User {user_name: $username})
         RETURN u;
-      `;
+        `;
 
-        // Execute the query
         const result = await session.run(query, { username });
 
-        // Check if the user was found
         if (result.records.length > 0) {
-            const user = result.records[0].get('u').properties;
+            const user = convertProperties(result.records[0].get('u').properties);
             console.log('User found:', user);
             return { status: 'found', user };
         } else {
@@ -30,18 +39,6 @@ export async function getUserByUsername(username) {
     } finally {
         await session.close();
     }
-}
-
-// Función para convertir números de Neo4j a números normales
-function convertNeo4jNumber(value) {
-    return neo4j.isInt(value) ? value.toNumber() : value;
-}
-
-// Función para convertir todas las propiedades de un nodo
-function convertProperties(properties) {
-    return Object.fromEntries(
-        Object.entries(properties).map(([key, value]) => [key, convertNeo4jNumber(value)])
-    );
 }
 
 export async function getPostsWithLimit(post_limit) {
@@ -96,7 +93,7 @@ export async function getPostCommentsByID(postId) {
         const comments = result.records
             .map(record => ({
                 comment: record.get('comment') ? convertProperties(record.get('comment').properties) : null,
-                user: record.get('user') ? convertProperties(record.get('user').properties) : null,
+                author: record.get('user') ? convertProperties(record.get('user').properties) : null,
             }))
             .filter(entry => entry.comment !== null); // Filtrar los que no tienen comentario
 
