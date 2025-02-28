@@ -1,6 +1,6 @@
 import express from 'express';
 import { testConnection, getNodes } from './functions/test.js';
-import { getUserByUsername } from './functions/chuy.js';
+import { getUserByUsername, getPostsWithLimit } from './functions/chuy.js';
 const port = 3000
 
 const app = express();
@@ -43,6 +43,22 @@ app.get('/get-user/:username', async (req, res) => {
       res.status(200).json({ message: 'User found', user: result.user });
     } else {
       res.status(404).json({ message: 'User not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'An error occurred', error: error.message });
+  }
+});
+
+app.get('/get-posts/:posts_limit', async (req, res) => {
+  const { posts_limit } = req.params;
+
+  try {
+    const result = await getPostsWithLimit(posts_limit);
+
+    if (result.status === 'success') {
+      res.status(200).json({ message: 'Found posts', posts: result.posts });
+    } else {
+      res.status(404).json({ message: 'Posts not found' });
     }
   } catch (error) {
     res.status(500).json({ message: 'An error occurred', error: error.message });

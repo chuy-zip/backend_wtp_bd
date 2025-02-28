@@ -10,6 +10,9 @@ export default [
         process: "readonly",  // Allow process to be used as a global in Node.js
       },
     },
+    rules: {
+      "no-unused-vars": "off", // Disable the unused vars rule
+    },
   },
   pluginJs.configs.recommended,
 ];
