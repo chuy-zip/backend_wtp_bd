@@ -39,8 +39,8 @@ app.get('/api/neoTest', async (req, res) => {
 // por editar
 app.post('/api/createPost', async (req, res) => {
   try {
-    const { text, imagen, hashtags, reposted } = req.body;
-    await createPost(text, imagen, hashtags, reposted);
+    const {username, text, imagen, hashtags, reposted } = req.body;
+    await createPost(username, text, imagen, hashtags, reposted);
     res.status(201).json({ message: 'Post created successfully' });
   } catch (error) {
     res.status(500).json({ error: error.message });

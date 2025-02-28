@@ -2,19 +2,11 @@ import getDriver from '../neoDriver.js';
 
 const driver = getDriver();
 
-export async function createPost(text, imagen, hashtags, reposted = false) {
-    /**
-     * Creates a Post node with specified attributes.
-     *
-     * @param {string} text - The content of the post.
-     * @param {string} imagen - The image URL associated with the post.
-     * @param {Array<string>} hashtags - A list of hashtags associated with the post.
-     * @param {boolean} [reposted=false] - Whether the post has been reposted.
-     */
+export async function createPost(username, text, imagen, hashtags, reposted = false, source = "Web", visibility = "public") {
+    const session = driver.session();
 
-    const label = "Post";
     const query = `
-        CREATE (p:${label} {
+        CREATE (p:Post {
             text: $text,
             imagen: $imagen,
             likes: 0,
@@ -24,11 +16,37 @@ export async function createPost(text, imagen, hashtags, reposted = false) {
         })
     `;
 
-    const session = driver.session();
-
     try {
-        await session.run(query, { text, imagen, reposted, hashtags });
-        console.log("Post created successfully.");
+        const idResult = await session.run(
+            'MATCH (p:Post) RETURN p.id ORDER BY p.id DESC LIMIT 1'
+        );
+        
+        const highestId = idResult.records.length > 0 ? idResult.records[0].get('p.id').toNumber() : 0;
+        const newId = highestId + 1;
+
+
+        const query = `
+            CREATE (p:Post {
+                id: $newId, 
+                text: $text, 
+                imagen: $imagen, 
+                likes: 0, 
+                dislikes: 0, 
+                retweet: $reposted, 
+                hashtags: $hashtags
+            })
+            WITH p
+            MATCH (u:User {user_name: $username})
+            CREATE (u)-[:CREATED {
+                time_stamp: datetime(),
+                visibility: $visibility,
+                source: $source
+            }]->(p)
+            RETURN p`;
+        
+        await session.run(query, { newId, text, imagen, reposted, hashtags, username, visibility, source });
+        console.log("Post created successfully with ID:", newId);
+
     } catch (error) {
         console.error("Error executing query:", error);
     } finally {
