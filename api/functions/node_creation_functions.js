@@ -2,35 +2,40 @@ import getDriver from '../neoDriver.js';
 /* eslint-disable no-unused-vars */
 const driver = getDriver();
 
-async function createPost(text, imagen, hashtags, reposted = false) {
-    /**
-     * Creates a Post node with specified attributes.
-     *
-     * @param {string} text - The content of the post.
-     * @param {string} imagen - The image URL associated with the post.
-     * @param {Array<string>} hashtags - A list of hashtags associated with the post.
-     * @param {boolean} [reposted=false] - Whether the post has been reposted.
-     */
-
-    const label = "Post";
-    const time = new Date()
-    const query = `
-        CREATE (p:${label} {
-            text: $text,
-            imagen: $imagen,
-            time_stamp: $time,
-            likes: 0,
-            dislikes: 0,
-            reposted: $reposted,
-            hashtags: $hashtags
-        })
-    `;
-
+export async function createPost(username, text, imagen, hashtags, reposted = false, source = "Web", visibility = "public") {
     const session = driver.session();
 
     try {
-        await session.run(query, { text, time, imagen, reposted, hashtags });
-        console.log("Post created successfully.");
+        const idResult = await session.run(
+            'MATCH (p:Post) RETURN p.id ORDER BY p.id DESC LIMIT 1'
+        );
+        
+        const highestId = idResult.records.length > 0 ? idResult.records[0].get('p.id').toNumber() : 0;
+        const newId = highestId + 1;
+
+
+        const query = `
+            CREATE (p:Post {
+                id: $newId, 
+                text: $text, 
+                imagen: $imagen, 
+                likes: 0, 
+                dislikes: 0, 
+                retweet: $reposted, 
+                hashtags: $hashtags
+            })
+            WITH p
+            MATCH (u:User {user_name: $username})
+            CREATE (u)-[:CREATED {
+                time_stamp: datetime(),
+                visibility: $visibility,
+                source: $source
+            }]->(p)
+            RETURN p`;
+        
+        await session.run(query, { newId, text, imagen, reposted, hashtags, username, visibility, source });
+        console.log("Post created successfully with ID:", newId);
+
     } catch (error) {
         console.error("Error executing query:", error);
     } finally {
@@ -38,23 +43,10 @@ async function createPost(text, imagen, hashtags, reposted = false) {
     }
 }
 
-async function createUser(username, password, email, born, first_name, last_name, gender) {
-    /**
-     * Creates a User node with specified attributes.
-     *
-     * @param {string} username - The username of the user.
-     * @param {string} password - The password of the user.
-     * @param {string} email - The email of the user.
-     * @param {Date} born - The birthdate of the user. Format: YYYY-MM-DD
-     * @param {string} first_name - The first name of the user.
-     * @param {string} last_name - The last name of the user.
-     * @param {string} gender - The gender of the user (Female, Male, NonBinary, NotSpecified).
-     */
-
-    const label = "User";
+export async function createUser(username, password, email, born, first_name, last_name, gender) {
     const query = `
-        CREATE (u:${label} {
-            username: $username,
+        CREATE (u:User {
+            user_name: $username,
             password: $password,
             email: $email,
             born: $born,
@@ -80,32 +72,48 @@ async function createUser(username, password, email, born, first_name, last_name
 }
 
 
-async function createComment(text, reposted = false) {
-    /**
-     * Creates a Comment node with attributes
-     * 
-     * @param {string} text - The content of the post.
-     * @param {boolean} reposted - If the comment is a repost of other comment 
-     */
-
-    const time = new Date()
-
-    const label = "Comment"
-    const query = `
-        CREATE (c:${label} {
-            text: $text,
-            time_stamp: $time,
-            likes: 0,
-            dislikes: 0,
-            reposted: $reposted
-        })
-    `;
-
+export async function createComment(text, reposted = false, postId, username, writterIsActive, isPinned = false, language = "english") {
     const session = driver.session();
 
     try {
-        await session.run(query, { text, time, reposted });
-        console.log("Comment created successfully.");
+        const timeStamp = new Date().toISOString();
+        postId = Number(postId);
+
+        writterIsActive = Boolean(writterIsActive); 
+        isPinned = Boolean(isPinned);
+        language = language ?? "english";
+
+        const idResult = await session.run(
+            'MATCH (c:Comment) RETURN c.id ORDER BY c.id DESC LIMIT 1'
+        );
+
+        const highestId = idResult.records.length > 0 ? idResult.records[0].get('c.id').toNumber() : 0;
+        const newId = highestId + 1;
+
+        const query = `
+            MATCH (p:Post {id: $postId}), (u:User {user_name: $username})
+            CREATE (c:Comment {
+                id: $newId,
+                text: $text,
+                time_stamp: datetime($timeStamp), 
+                likes: 0,
+                dislikes: 0,
+                retweet: $reposted
+            })
+            CREATE (c)-[:BELONGS_TO {
+                time_stamp: datetime($timeStamp), 
+                writter_is_active: $writterIsActive, 
+                is_pinned: $isPinned
+            }]->(p)
+            CREATE (u)-[:WROTE {
+                time_stamp: datetime($timeStamp), 
+                language: $language, 
+                edited: false
+            }]->(c)
+        `;
+
+        await session.run(query, { text, reposted, postId, username, writterIsActive, isPinned, language, newId, timeStamp });
+        console.log("Comment created successfully with relationships.");
     } catch (error) {
         console.error("Error executing query:", error);
     } finally {
@@ -113,13 +121,8 @@ async function createComment(text, reposted = false) {
     }
 }
 
-async function createTopic( name, description) {
-    /**
-     * Create a Topic node with specified attributes.
-     * 
-     * @param {string} name - name of the topic
-     * @param {string} description - a text describing what the topic is about
-     */
+// TODO: modificarlo para crear de una la relacion con el usuario que lo creó
+/* export async function createTopic( name, description) {
 
     const time = new Date()
 
@@ -146,16 +149,7 @@ async function createTopic( name, description) {
     }
 }
 
-async function createCountry(name, description, continent, language, country_code) {
-    /**
-     * Creates a Country node with specified attributes
-     * 
-     * @param {string} name - name of the topic
-     * @param {string} description - a text describing what the topic is about
-     * @param {string} continent - the name of the continent where the country is located at.
-     * @param {Array<string>} language - A list of languages that are spoke in the country.
-     * @param {string} country_code - the country code assigned to the country (ej. Guatemala: 502)
-     */
+export async function createCountry(name, description, continent, language, country_code) {
 
     const label = "Country"
     const query = `
@@ -178,4 +172,8 @@ async function createCountry(name, description, continent, language, country_cod
     } finally {
         await session.close();
     }
-}
+}*/
+
+// TODO: funcion para relacionar un topic con un post
+// TODO: funcion de like y dislikes (tienen que traer el autoincremento de los valores en post/comentario)
+// TODO: funcion de followers and following (tienen que traer el autoincremento de los valores en user)
