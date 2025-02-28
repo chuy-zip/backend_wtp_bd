@@ -1,0 +1,33 @@
+CREAR POST
+POST > http://127.0.0.1:3000/api/createPost
+{
+    "username": "",
+    "text": "",
+    "imagen": "",
+    "hashtags": "",
+    "reposted": false
+}
+
+CREAR USER
+POST > http://127.0.0.1:3000/api/registerUser
+{ 
+    "username": "", 
+    "password": "", 
+    "email": "", 
+    "born":, 
+    "first_name": "", 
+    "last_name": "", 
+    "gender": "" 
+}
+
+CREAR COMMENT
+POST > http://127.0.0.1:3000/api/comment
+{ 
+    "text":"", 
+    "reposted": , 
+    "postId": , 
+    "username":"", 
+    "writterIsActive": true, 
+    "isPinned": false, 
+    "language":"english"
+}
