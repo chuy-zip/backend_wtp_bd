@@ -58,6 +58,17 @@ app.post('/api/registerUser', async (req, res) => {
   }
 });
 
+// comment in a post
+app.post('/api/comment', async (req, res) => {
+  try {
+    const { text, reposted, postId, username, writterIsActive, isPinned, language } = req.body;
+    await createComment(text, reposted, postId, username, writterIsActive, isPinned, language)
+    res.status(201).json({ message: 'Comment created successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server listening at http://127.0.0.1:${port}`)
 })

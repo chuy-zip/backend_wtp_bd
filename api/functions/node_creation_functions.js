@@ -44,9 +44,8 @@ export async function createPost(username, text, imagen, hashtags, reposted = fa
 }
 
 export async function createUser(username, password, email, born, first_name, last_name, gender) {
-    const label = "User";
     const query = `
-        CREATE (u:${label} {
+        CREATE (u:User {
             user_name: $username,
             password: $password,
             email: $email,
@@ -73,30 +72,55 @@ export async function createUser(username, password, email, born, first_name, la
 }
 
 
-export async function createComment(text, reposted = false, postId) {
-    const time = new Date()
-
-    const query = `
-        CREATE (c:Comment {
-            text: $text,
-            time_stamp: $time,
-            likes: 0,
-            dislikes: 0,
-            retweet: $reposted
-        })
-    `;
-
+export async function createComment(text, reposted = false, postId, username, writterIsActive, isPinned = false, language = "english") {
     const session = driver.session();
 
     try {
-        await session.run(query, { text, time, reposted });
-        console.log("Comment created successfully.");
+        const timeStamp = new Date().toISOString();
+        postId = Number(postId);
+
+        writterIsActive = Boolean(writterIsActive); 
+        isPinned = Boolean(isPinned);
+        language = language ?? "english";
+
+        const idResult = await session.run(
+            'MATCH (c:Comment) RETURN c.id ORDER BY c.id DESC LIMIT 1'
+        );
+
+        const highestId = idResult.records.length > 0 ? idResult.records[0].get('c.id').toNumber() : 0;
+        const newId = highestId + 1;
+
+        const query = `
+            MATCH (p:Post {id: $postId}), (u:User {user_name: $username})
+            CREATE (c:Comment {
+                id: $newId,
+                text: $text,
+                time_stamp: datetime($timeStamp), 
+                likes: 0,
+                dislikes: 0,
+                retweet: $reposted
+            })
+            CREATE (c)-[:BELONGS_TO {
+                time_stamp: datetime($timeStamp), 
+                writter_is_active: $writterIsActive, 
+                is_pinned: $isPinned
+            }]->(p)
+            CREATE (u)-[:WROTE {
+                time_stamp: datetime($timeStamp), 
+                language: $language, 
+                edited: false
+            }]->(c)
+        `;
+
+        await session.run(query, { text, reposted, postId, username, writterIsActive, isPinned, language, newId, timeStamp });
+        console.log("Comment created successfully with relationships.");
     } catch (error) {
         console.error("Error executing query:", error);
     } finally {
         await session.close();
     }
 }
+
 
 export async function createTopic( name, description) {
     /**
