@@ -1,5 +1,6 @@
 import express from 'express';
 import { testConnection, getNodes } from './functions/test.js';
+import { getUserByUsername } from './functions/chuy.js';
 const port = 3000
 
 const app = express();
@@ -29,6 +30,22 @@ app.get('/api/neoTest', async (req, res) => {
     res.status(200).json(result)
   } catch (error) {
     res.status(500).json({ error: error })
+  }
+});
+
+app.get('/get-user/:username', async (req, res) => {
+  const { username } = req.params;
+
+  try {
+    const result = await getUserByUsername(username);
+
+    if (result.status === 'found') {
+      res.status(200).json({ message: 'User found', user: result.user });
+    } else {
+      res.status(404).json({ message: 'User not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'An error occurred', error: error.message });
   }
 });
 
