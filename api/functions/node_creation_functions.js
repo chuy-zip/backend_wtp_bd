@@ -1,5 +1,5 @@
 import getDriver from '../neoDriver.js';
-
+/* eslint-disable no-unused-vars */
 const driver = getDriver();
 
 export async function createPost(username, text, imagen, hashtags, reposted = false, source = "Web", visibility = "public") {
