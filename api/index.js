@@ -33,7 +33,7 @@ app.get('/api/neoTest', async (req, res) => {
   }
 });
 
-app.get('/get-user/:username', async (req, res) => {
+app.get('/api/get-user/:username', async (req, res) => {
   const { username } = req.params;
 
   try {
@@ -49,7 +49,7 @@ app.get('/get-user/:username', async (req, res) => {
   }
 });
 
-app.get('/get-posts/:posts_limit', async (req, res) => {
+app.get('/api/get-posts/:posts_limit', async (req, res) => {
   const { posts_limit } = req.params;
 
   try {
