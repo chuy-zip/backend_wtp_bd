@@ -1,7 +1,5 @@
 import getDriver from '../neoDriver.js';
 
-const driver = getDriver();
-
 export async function getUserByUsername(username) {
     const driver = getDriver();
     const session = driver.session();
