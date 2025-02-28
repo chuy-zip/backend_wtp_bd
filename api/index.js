@@ -1,6 +1,6 @@
 import express from 'express';
 import { testConnection, getNodes } from './functions/test.js';
-import { createPost , createUser, createComment, createTopic, createCountry} from './functions/node_creation_functions.js'
+import { createPost , createUser, createComment/*, createTopic, createCountry*/} from './functions/node_creation_functions.js'
 
 const port = 3000
 

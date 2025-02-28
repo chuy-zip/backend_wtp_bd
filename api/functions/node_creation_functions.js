@@ -122,13 +122,7 @@ export async function createComment(text, reposted = false, postId, username, wr
 }
 
 // TODO: modificarlo para crear de una la relacion con el usuario que lo creó
-export async function createTopic( name, description) {
-    /**
-     * Create a Topic node with specified attributes.
-     * 
-     * @param {string} name - name of the topic
-     * @param {string} description - a text describing what the topic is about
-     */
+/* export async function createTopic( name, description) {
 
     const time = new Date()
 
@@ -156,15 +150,6 @@ export async function createTopic( name, description) {
 }
 
 export async function createCountry(name, description, continent, language, country_code) {
-    /**
-     * Creates a Country node with specified attributes
-     * 
-     * @param {string} name - name of the topic
-     * @param {string} description - a text describing what the topic is about
-     * @param {string} continent - the name of the continent where the country is located at.
-     * @param {Array<string>} language - A list of languages that are spoke in the country.
-     * @param {string} country_code - the country code assigned to the country (ej. Guatemala: 502)
-     */
 
     const label = "Country"
     const query = `
@@ -187,7 +172,7 @@ export async function createCountry(name, description, continent, language, coun
     } finally {
         await session.close();
     }
-}
+}*/
 
 // TODO: funcion para relacionar un topic con un post
 // TODO: funcion de like y dislikes (tienen que traer el autoincremento de los valores en post/comentario)
