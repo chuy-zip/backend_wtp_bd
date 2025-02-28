@@ -1,6 +1,6 @@
 import express from 'express';
 import { testConnection, getNodes } from './functions/test.js';
-import { getUserByUsername, getPostsWithLimit } from './functions/chuy.js';
+import { getUserByUsername, getPostsWithLimit, getPostCommentsByID} from './functions/chuy.js';
 const port = 3000
 
 const app = express();
