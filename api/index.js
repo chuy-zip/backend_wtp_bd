@@ -3,7 +3,7 @@ import { testConnection, getNodes } from './functions/test.js';
 import { createPost , createUser, createComment, /*, createTopic, createCountry*/} from './functions/node_creation_functions.js'
 
 
-import { getPostCommentsByID, getPostsWithLimit, getUserByUsername, getUniqueCountries, addUserInterest } from './functions/chuy.js';
+import { getPostCommentsByID, getPostsWithLimit, getUserByUsername, getUniqueCountries, addUserInterest, changeUserCountry } from './functions/chuy.js';
 
 
 const port = 3000
