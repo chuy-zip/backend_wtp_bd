@@ -5,17 +5,6 @@ const driver = getDriver();
 export async function createPost(username, text, imagen, hashtags, reposted = false, source = "Web", visibility = "public") {
     const session = driver.session();
 
-    const query = `
-        CREATE (p:Post {
-            text: $text,
-            imagen: $imagen,
-            likes: 0,
-            dislikes: 0,
-            retweet: $reposted,
-            hashtags: $hashtags
-        })
-    `;
-
     try {
         const idResult = await session.run(
             'MATCH (p:Post) RETURN p.id ORDER BY p.id DESC LIMIT 1'
@@ -55,18 +44,6 @@ export async function createPost(username, text, imagen, hashtags, reposted = fa
 }
 
 export async function createUser(username, password, email, born, first_name, last_name, gender) {
-    /**
-     * Creates a User node with specified attributes.
-     *
-     * @param {string} username - The username of the user.
-     * @param {string} password - The password of the user.
-     * @param {string} email - The email of the user.
-     * @param {Date} born - The birthdate of the user. Format: YYYY-MM-DD
-     * @param {string} first_name - The first name of the user.
-     * @param {string} last_name - The last name of the user.
-     * @param {string} gender - The gender of the user (Female, Male, NonBinary, NotSpecified).
-     */
-
     const label = "User";
     const query = `
         CREATE (u:${label} {
@@ -96,19 +73,11 @@ export async function createUser(username, password, email, born, first_name, la
 }
 
 
-export async function createComment(text, reposted = false) {
-    /**
-     * Creates a Comment node with attributes
-     * 
-     * @param {string} text - The content of the post.
-     * @param {boolean} reposted - If the comment is a repost of other comment 
-     */
-
+export async function createComment(text, reposted = false, postId) {
     const time = new Date()
 
-    const label = "Comment"
     const query = `
-        CREATE (c:${label} {
+        CREATE (c:Comment {
             text: $text,
             time_stamp: $time,
             likes: 0,
