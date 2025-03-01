@@ -1,6 +1,6 @@
 import express from 'express';
 import { testConnection, getNodes } from './functions/test.js';
-import { createPost , createUser, createComment/*, createTopic, createCountry*/} from './functions/node_creation_functions.js'
+import { createPost , createUser, createComment, createTopic/*,createCountry*/ } from './functions/node_creation_functions.js'
 
 const port = 3000
 
@@ -64,6 +64,17 @@ app.post('/api/comment', async (req, res) => {
     const { text, reposted, postId, username, writterIsActive, isPinned, language } = req.body;
     await createComment(text, reposted, postId, username, writterIsActive, isPinned, language)
     res.status(201).json({ message: 'Comment created successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// create a topic
+app.post('/api/createTopic', async (req, res) => {
+  try {
+    const { name, description, user_name, source, visibility } = req.body;
+    await createTopic(name, description, user_name, source, visibility)
+    res.status(201).json({ message: 'Topic created successfully' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

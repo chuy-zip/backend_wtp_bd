@@ -121,26 +121,38 @@ export async function createComment(text, reposted = false, postId, username, wr
     }
 }
 
-// TODO: modificarlo para crear de una la relacion con el usuario que lo creó
-/* export async function createTopic( name, description) {
-
-    const time = new Date()
-
-    const label = "Topic"
-    const query = `
-        CREATE (t:${label} {
-            name: $name,
-            description: $description,
-            time_creation: $time,
-            followers: 0,
-            ranking: 0
-        })
-    `;
-
+export async function createTopic( name, description, user_name, source, visibility) {
     const session = driver.session();
 
     try {
-        await session.run(query, { name, description, time });
+        const time = new Date()
+       
+        const idResult = await session.run(
+            'MATCH (t:Topic) RETURN t.id ORDER BY t.id DESC LIMIT 1'
+        );
+        
+        const highestId = idResult.records.length > 0 ? idResult.records[0].get('t.id').toNumber() : 0;
+        const newId = highestId + 1;
+
+        const query = `
+            CREATE (t:Topic {
+                id: $newId,
+                name: $name,
+                description: $description,
+                time_creation: datetime(),
+                followers: 0,
+                ranking: 0
+            })
+            WITH t
+            MATCH (u:User {user_name: $user_name})
+            CREATE (u)-[:CREATED {
+                time_stamp: datetime(),
+                visibility: $visibility,
+                source: $source
+            }]->(t)
+            RETURN t
+        `;
+        await session.run(query, {newId, name, description, time, user_name, visibility, source });
         console.log("Topic created successfully.");
     } catch (error) {
         console.error("Error executing query:", error);
@@ -149,7 +161,7 @@ export async function createComment(text, reposted = false, postId, username, wr
     }
 }
 
-export async function createCountry(name, description, continent, language, country_code) {
+/* export async function createCountry(name, description, continent, language, country_code) {
 
     const label = "Country"
     const query = `
