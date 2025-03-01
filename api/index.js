@@ -1,6 +1,6 @@
 import express from 'express';
 import { testConnection, getNodes } from './functions/test.js';
-import { createPost , createUser, createComment, createTopic/*,createCountry*/ } from './functions/node_creation_functions.js'
+import { createPost , createUser, createComment, createTopic, createCountry } from './functions/node_creation_functions.js'
 
 
 import { getPostCommentsByID, getPostsWithLimit, getUserByUsername, getUniqueCountries, addUserInterest, changeUserCountry } from './functions/chuy.js';
@@ -192,6 +192,16 @@ app.post('/api/change-user-country', async (req, res) => {
   } catch (error) {
     console.error('Error in API:', error);
     res.status(500).json({ message: 'An error occurred', error: error.message });
+  }
+});
+
+app.post('/api/createCountry', async (req, res) =>{
+  try {
+    const { name, description, continent, language, country_code } = req.body;
+    await createCountry(name, description, continent, language, country_code)
+    res.status(201).json({ message: 'Country created successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 });
 

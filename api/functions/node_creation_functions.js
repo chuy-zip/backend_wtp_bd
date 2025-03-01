@@ -161,31 +161,42 @@ export async function createTopic( name, description, user_name, source, visibil
     }
 }
 
-/* export async function createCountry(name, description, continent, language, country_code) {
+export async function createCountry(name, description, continent, language, country_code) {
 
     const label = "Country"
-    const query = `
+
+    const session = driver.session();
+
+    try {
+
+        const idResult = await session.run(
+            'MATCH (ct:Country) RETURN ct.id ORDER BY ct.id DESC LIMIT 1'
+        );
+        
+        const highestId = idResult.records.length > 0 ? idResult.records[0].get('ct.id').toNumber() : 0;
+        const newId = highestId + 1;
+
+        const query = `
         CREATE (ct:${label} {
             name: $name,
             description: $description,
             continent: $continent,
             language: $language,
-            country_code: $country_code
+            country_code: $country_code,
+            id: $newId
         })
-    `;
+        `;
 
-    const session = driver.session();
-
-    try {
-        await session.run(query, { name, description, continent, language, country_code });
+        await session.run(query, { name, description, continent, language, country_code, newId });
         console.log("Topic created successfully.");
     } catch (error) {
         console.error("Error executing query:", error);
     } finally {
         await session.close();
     }
-}*/
+}
 
 // TODO: funcion para relacionar un topic con un post
 // TODO: funcion de like y dislikes (tienen que traer el autoincremento de los valores en post/comentario)
 // TODO: funcion de followers and following (tienen que traer el autoincremento de los valores en user)
+// TODO: funcion de relatcion FROM de donde viene el user con country
