@@ -156,13 +156,16 @@ export async function getUniqueCountries() {
     try {
         const query = `
         MATCH (country:Country)
-        RETURN DISTINCT country;
+        WITH country.name AS countryName, COLLECT(country)[0] AS uniqueCountry
+        RETURN uniqueCountry;
         `;
 
         const result = await session.run(query);
 
         if (result.records.length > 0) {
-            const countries = result.records.map(record => convertProperties(record.get('country').properties));
+            const countries = result.records.map(record => 
+                convertProperties(record.get('uniqueCountry').properties)
+            );
             return { status: 'found', countries };
         } else {
             return { status: 'not_found', countries: [] };
@@ -174,6 +177,7 @@ export async function getUniqueCountries() {
         await session.close();
     }
 }
+
 
 export async function addUserInterest(username, topicName) {
     const driver = getDriver();
@@ -204,38 +208,37 @@ export async function addUserInterest(username, topicName) {
 export async function changeUserCountry(username, newCountry) {
     const driver = getDriver();
     const session = driver.session();
-  
+
     try {
-      // Definir el query
-      const query = `
-        MATCH (user:User {user_name: $username})-[initial_FROM:FROM]-(country:Country)
-        DELETE initial_FROM
-        MERGE (user)-[new_FROM:FROM]->(country2:Country {name: $newCountry})
-        RETURN user, new_FROM, country2;
-      `;
-  
-      // Ejecutar el query con los parámetros
-      const result = await session.run(query, {
-        username, 
-        newCountry
-      });
-  
-      if (result.records.length > 0) {
-        const user = result.records[0].get('user').properties;
-        const country2 = result.records[0].get('country2').properties;
-        console.log('User country updated:', user, country2);
-        return { status: 'success', user, country2 };
-      } else {
-        console.log('No user found or country not updated');
-        return { status: 'failure', message: 'No user found or country not updated' };
-      }
+        const query = `
+            MATCH (user:User {user_name: $username})
+            OPTIONAL MATCH (user)-[old_FROM:FROM]->(oldCountry:Country)
+            DELETE old_FROM
+            WITH user
+            MERGE (newCountry:Country {name: $newCountry})
+            MERGE (user)-[:FROM]->(newCountry)
+            RETURN user, newCountry;
+        `;
+
+        const result = await session.run(query, { username, newCountry });
+
+        if (result.records.length > 0) {
+            const user = result.records[0].get('user').properties;
+            const country = result.records[0].get('newCountry').properties;
+            console.log('User country updated:', user, country);
+            return { status: 'success', user, country };
+        } else {
+            console.log('No user found or country not updated');
+            return { status: 'failure', message: 'No user found or country not updated' };
+        }
     } catch (error) {
-      console.error('Error changing user country:', error);
-      throw error;
+        console.error('Error changing user country:', error);
+        throw error;
     } finally {
-      await session.close();
+        await session.close();
     }
-  }
+}
+
 
   export async function searchPostsBySimilarUser(username) {
     const driver = getDriver();
