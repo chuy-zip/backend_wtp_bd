@@ -1,14 +1,16 @@
 import express from 'express';
 import { testConnection, getNodes } from './functions/test.js';
-import { createPost , createUser, createComment, /*, createTopic, createCountry*/} from './functions/node_creation_functions.js'
+import { createPost, createUser, createComment, /*, createTopic, createCountry*/ } from './functions/node_creation_functions.js'
+import cors from 'cors';
 
-
-import { getPostCommentsByID, getPostsWithLimit, getUserByUsername, getUniqueCountries, addUserInterest, changeUserCountry } from './functions/chuy.js';
+import { getPostCommentsByID, getPostsWithLimit, getUserByUsername, getUniqueCountries, addUserInterest, changeUserCountry, getPostsByUser } from './functions/chuy.js';
 
 
 const port = 3000
 
 const app = express();
+// cors
+app.use(cors());
 
 app.use(express.json());
 
@@ -25,7 +27,7 @@ app.get('/api/actionTest', async (req, res) => {
     const result = await getNodes();
     res.status(200).json(result)
   } catch (error) {
-    res.status(500).json({ error: error})
+    res.status(500).json({ error: error })
   }
 });
 
@@ -43,7 +45,7 @@ app.get('/api/neoTest', async (req, res) => {
 // por editar
 app.post('/api/createPost', async (req, res) => {
   try {
-    const {username, text, imagen, hashtags, reposted } = req.body;
+    const { username, text, imagen, hashtags, reposted } = req.body;
     await createPost(username, text, imagen, hashtags, reposted);
     res.status(201).json({ message: 'Post created successfully' });
 
@@ -132,15 +134,15 @@ app.get('/api/get-comments/:postId', async (req, res) => {
 
 app.get('/api/get-countries', async (req, res) => {
   try {
-      const result = await getUniqueCountries();
+    const result = await getUniqueCountries();
 
-      if (result.status === 'found') {
-          res.status(200).json({ message: 'found', countries: result.countries });
-      } else {
-          res.status(404).json({ message: 'not_found', countries: [] });
-      }
+    if (result.status === 'found') {
+      res.status(200).json({ message: 'found', countries: result.countries });
+    } else {
+      res.status(404).json({ message: 'not_found', countries: [] });
+    }
   } catch (error) {
-      res.status(500).json({ message: 'An error occurred', error: error.message });
+    res.status(500).json({ message: 'An error occurred', error: error.message });
   }
 });
 
@@ -148,19 +150,19 @@ app.post('/api/add-interest', async (req, res) => {
   const { username, topic } = req.body;
 
   if (!username || !topic) {
-      return res.status(400).json({ message: 'Missing username or topic' });
+    return res.status(400).json({ message: 'Missing username or topic' });
   }
 
   try {
-      const result = await addUserInterest(username, topic);
+    const result = await addUserInterest(username, topic);
 
-      if (result.status === 'success') {
-          res.status(200).json(result);
-      } else {
-          res.status(404).json(result);
-      }
+    if (result.status === 'success') {
+      res.status(200).json(result);
+    } else {
+      res.status(404).json(result);
+    }
   } catch (error) {
-      res.status(500).json({ message: 'An error occurred', error: error.message });
+    res.status(500).json({ message: 'An error occurred', error: error.message });
   }
 });
 
@@ -190,6 +192,34 @@ app.post('/api/change-user-country', async (req, res) => {
     res.status(500).json({ message: 'An error occurred', error: error.message });
   }
 });
+
+app.get('/api/get-posts-user/:username', async (req, res) => {
+  const { username } = req.params;
+
+  if (!username) {
+      return res.status(400).json({ message: 'Missing parameter: username is required' });
+  }
+
+  try {
+      const result = await getPostsByUser(username);
+
+      if (result.status === 'success') {
+          res.status(200).json({
+              message: 'Posts found',
+              posts: result.posts,
+          });
+      } else {
+          res.status(404).json({
+              message: 'No posts found for this user',
+              posts: [],
+          });
+      }
+  } catch (error) {
+      console.error('Error in API:', error);
+      res.status(500).json({ message: 'An error occurred', error: error.message });
+  }
+});
+
 
 app.listen(port, () => {
   console.log(`Server listening at http://127.0.0.1:${port}`)

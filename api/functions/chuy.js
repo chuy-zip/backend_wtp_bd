@@ -43,6 +43,37 @@ export async function getUserByUsername(username) {
     }
 }
 
+export async function getPostsByUser(username) {
+    const driver = getDriver();
+    const session = driver.session();
+
+    try {
+        const query = `
+        MATCH (user:User {user_name: $username})-[created:CREATED]->(post:Post)
+        RETURN user, post
+        `;
+
+        const result = await session.run(query, { username });
+
+        if (result.records.length > 0) {
+            const posts = result.records.map(record => ({
+                post: convertProperties(record.get('post').properties),
+                author: convertProperties(record.get('user').properties) // Ahora sí existe en el query
+            }));
+
+            return { status: 'success', posts };
+        } else {
+            return { status: 'no_posts_found', posts: [] };
+        }
+    } catch (error) {
+        console.error('Error fetching posts:', error);
+        throw error;
+    } finally {
+        await session.close();
+    }
+}
+
+
 export async function getPostsWithLimit(post_limit) {
     const driver = getDriver();
     const session = driver.session();
