@@ -293,6 +293,8 @@ app.post('/api/add-interest', async (req, res) => {
 app.post('/api/change-user-country', async (req, res) => {
   const { user_name, newCountry } = req.body;
 
+  console.log( user_name, newCountry)
+
   if (!user_name || !newCountry) {
     return res.status(400).json({ message: 'Missing parameters: user_name and newCountry are required' });
   }
