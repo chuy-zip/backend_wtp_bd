@@ -1,6 +1,6 @@
 import express from 'express';
 import { testConnection, getNodes } from './functions/test.js';
-import { createPost , createUser, createComment, createTopic, createCountry } from './functions/node_creation_functions.js'
+import { createPost , createUser, createComment, createTopic, createCountry, connectPostToTopic, likeNode, dislikeNode, followUser, blockUser } from './functions/node_creation_functions.js'
 
 
 import { getPostCommentsByID, getPostsWithLimit, getUserByUsername, getUniqueCountries, addUserInterest, changeUserCountry } from './functions/chuy.js';
@@ -84,6 +84,81 @@ app.post('/api/createTopic', async (req, res) => {
   }
 });
 
+// connect post to topic*
+app.post('/api/postBelongsToTopic', async (req, res) => {
+  try {
+    const { postId, topicId } = req.body;
+    await connectPostToTopic(postId, topicId)
+    res.status(201).json({ message: 'Post connected to Topic successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// like y dislike (POSTS Y COMMENTS)*
+app.post('/api/likePost', async (req, res) => {
+  try {
+    const { user_name, nodeId, browser, source } = req.body;
+    await likeNode(user_name, nodeId, "Post", browser, source)
+    res.status(201).json({ message: 'Post liked successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.post('/api/dislikePost', async (req, res) => {
+  try {
+    const { user_name, nodeId, browser, source } = req.body;
+    await dislikeNode(user_name, nodeId, "Post", browser, source)
+    res.status(201).json({ message: 'Post disliked successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.post('/api/likeComment', async (req, res) => {
+  try {
+    const { user_name, nodeId, browser, source } = req.body;
+    await likeNode(user_name, nodeId, "Comment", browser, source)
+    res.status(201).json({ message: 'Comment liked successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.post('/api/dislikeComment', async (req, res) => {
+  try {
+    const { user_name, nodeId, browser, source } = req.body;
+    await dislikeNode(user_name, nodeId, "Comment", browser, source)
+    res.status(201).json({ message: 'Comment liked successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// follows user -> user*
+app.post('/api/follow', async (req, res) => {
+  try {
+    const { followerUsername, followedUsername, followType } = req.body;
+    await followUser(followerUsername, followedUsername, followType)
+    res.status(201).json({ message: 'User followed successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// bloquear usuario*
+app.post('/api/blocked', async (req, res) => {
+  try {
+    const { blockerUsername, blockedUsername, reason, isPermanent } = req.body;
+    await blockUser(blockerUsername, blockedUsername, reason, isPermanent)
+    res.status(201).json({ message: 'User followed successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// de chuy
 app.get('/api/get-user/:username', async (req, res) => {
   const { username } = req.params;
 
