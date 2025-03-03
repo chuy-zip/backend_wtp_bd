@@ -182,7 +182,7 @@ app.post('/api/topicFromCountry', async (req, res) => {
 });
 
 // editar valores de usuario
-app.post('/api/updateUser', async (req, res) => {
+app.put('/api/updateUser', async (req, res) => {
   try {
     const { user_name, born, first_name, last_name, gender } = req.body;
     await updateUser(user_name, born, first_name, last_name, gender)
