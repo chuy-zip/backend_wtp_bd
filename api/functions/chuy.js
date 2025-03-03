@@ -19,7 +19,8 @@ export async function getUserByUsername(username) {
 
     try {
         const query = `
-        MATCH (u:User {user_name: $username})-[:FROM]-(country:Country)
+        MATCH (u:User {user_name: $username})
+        OPTIONAL MATCH (u)-[:FROM]->(country:Country)
         RETURN u, country;
         `;
 
@@ -27,7 +28,9 @@ export async function getUserByUsername(username) {
 
         if (result.records.length > 0) {
             const user = convertProperties(result.records[0].get('u').properties);
-            const country = convertProperties(result.records[0].get('country').properties);
+            const countryRecord = result.records[0].get('country');
+
+            const country = countryRecord ? convertProperties(countryRecord.properties) : null;
 
             console.log('User found:', user, 'Country:', country);
             return { status: 'found', user, country };
@@ -42,6 +45,38 @@ export async function getUserByUsername(username) {
         await session.close();
     }
 }
+
+
+export async function getPostsByUser(username) {
+    const driver = getDriver();
+    const session = driver.session();
+
+    try {
+        const query = `
+        MATCH (user:User {user_name: $username})-[created:CREATED]->(post:Post)
+        RETURN user, post
+        `;
+
+        const result = await session.run(query, { username });
+
+        if (result.records.length > 0) {
+            const posts = result.records.map(record => ({
+                post: convertProperties(record.get('post').properties),
+                author: convertProperties(record.get('user').properties) // Ahora sí existe en el query
+            }));
+
+            return { status: 'success', posts };
+        } else {
+            return { status: 'no_posts_found', posts: [] };
+        }
+    } catch (error) {
+        console.error('Error fetching posts:', error);
+        throw error;
+    } finally {
+        await session.close();
+    }
+}
+
 
 export async function getPostsWithLimit(post_limit) {
     const driver = getDriver();
@@ -201,3 +236,38 @@ export async function changeUserCountry(username, newCountry) {
       await session.close();
     }
   }
+
+  export async function searchPostsBySimilarUser(username) {
+    const driver = getDriver();
+    const session = driver.session();
+
+    try {
+        const query = `
+        MATCH (user:User)-[:CREATED]->(post:Post)
+        WITH user, post, apoc.text.levenshteinSimilarity(user.user_name, $username) AS similarity
+        WHERE similarity > 0.5 // Ajusta el umbral de similitud según sea necesario
+        RETURN user, post, similarity
+        ORDER BY similarity DESC, post.created_at DESC
+        LIMIT 20;
+        `;
+
+        const result = await session.run(query, { username });
+
+        if (result.records.length > 0) {
+            const posts = result.records.map(record => ({
+                post: convertProperties(record.get('post').properties),
+                author: convertProperties(record.get('user').properties),
+                similarity: record.get('similarity') // Para depuración o análisis
+            }));
+
+            return { status: 'success', posts };
+        } else {
+            return { status: 'no_posts_found', posts: [] };
+        }
+    } catch (error) {
+        console.error('Error searching posts:', error);
+        throw error;
+    } finally {
+        await session.close();
+    }
+}
