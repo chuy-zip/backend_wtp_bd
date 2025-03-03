@@ -1,5 +1,4 @@
 import getDriver from '../neoDriver.js';
-/* eslint-disable no-unused-vars */
 const driver = getDriver();
 
 export async function createPost(username, text, imagen, hashtags, reposted = false, source = "Web", visibility = "public") {
@@ -393,4 +392,104 @@ export async function blockUser(blockerUsername, blockedUsername, reason, isPerm
     }
 }
 
-// TODO: funcion de relatcion FROM de donde viene el user con country
+// TODO: verificar si funciona
+export async function createFromRelation(leftNodeType, leftNodeIdentifier, countryName) {
+    const session = driver.session();
+
+    try {
+        const now = new Date();
+        const year = now.getFullYear();
+        const day = now.getDate();
+
+        let matchLeftNodeQuery = "";
+        let params = { countryName, year, day };
+
+        if (leftNodeType === "User") {
+            matchLeftNodeQuery = "MATCH (leftNode:User {user_name: $identifier})";
+            params.identifier = leftNodeIdentifier;
+        } else if (leftNodeType === "Topic") {
+            matchLeftNodeQuery = "MATCH (leftNode:Topic {id: $identifier})";
+            params.identifier = Number(leftNodeIdentifier);
+        } else {
+            console.error("Tipo de nodo no válido. Debe ser 'User' o 'Topic'.");
+            return;
+        }
+
+        // Verificar si ya existe la relación FROM
+        const checkQuery = `
+            ${matchLeftNodeQuery}
+            MATCH (country:Country {name: $countryName})
+            MATCH (leftNode)-[r:FROM]->(country)
+            RETURN r
+        `;
+
+        const checkResult = await session.run(checkQuery, params);
+
+        if (checkResult.records.length > 0) {
+            console.log(`Ya existe una relación FROM entre ${leftNodeType} y el país ${countryName}.`);
+            return; // Evita crear duplicados
+        }
+
+        // Crear la relación FROM
+        const createQuery = `
+            ${matchLeftNodeQuery}
+            MATCH (country:Country {name: $countryName})
+            CREATE (leftNode)-[:FROM {
+                leftNodeActive: true,
+                year: $year,
+                day: $day
+            }]->(country)
+        `;
+
+        await session.run(createQuery, params);
+
+        console.log(`Relación FROM creada entre ${leftNodeType} y ${countryName}.`);
+    } catch (error) {
+        console.error("Error creating FROM relationship:", error);
+    } finally {
+        await session.close();
+    }
+}
+
+// TODO: función para editar usuario
+export async function updateUser(user_name, born, first_name, last_name, gender) {
+    const session = driver.session();
+
+    try {
+        const query = `
+            MATCH (u:User {user_name: $user_name})
+            SET u.born = $born,
+                u.first_name = $first_name,
+                u.last_name = $last_name,
+                u.gender = $gender
+        `;
+
+        await session.run(query, { user_name, born, first_name, last_name, gender });
+        console.log(`Usuario '${user_name}' actualizado correctamente.`);
+    } catch (error) {
+        console.error("Error updating User:", error);
+    } finally {
+        await session.close();
+    }
+}
+
+// TODO: función para eliminar post
+export async function deletePostById(postId) {
+    const session = driver.session();
+
+    try {
+        postId = Number(postId); // Aseguramos que sea número
+
+        const query = `
+            MATCH (p:Post {id: $postId})
+            DETACH DELETE p
+        `;
+
+        await session.run(query, { postId });
+        console.log(`Post con id '${postId}' y todas sus relaciones eliminadas.`);
+    } catch (error) {
+        console.error("Error deleting Post:", error);
+    } finally {
+        await session.close();
+    }
+}

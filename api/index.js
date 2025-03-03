@@ -1,6 +1,6 @@
 import express from 'express';
 import { testConnection, getNodes } from './functions/test.js';
-import { createPost, createUser, createComment, createTopic, createCountry, connectPostToTopic, likeNode, dislikeNode, followUser, blockUser  } from './functions/node_creation_functions.js'
+import { createPost, createUser, createComment, createTopic, createCountry, connectPostToTopic, likeNode, dislikeNode, followUser, blockUser, createFromRelation, updateUser, deletePostById  } from './functions/node_creation_functions.js'
 import cors from 'cors';
 
 import { getPostCommentsByID, getPostsWithLimit, getUserByUsername, getUniqueCountries, addUserInterest, changeUserCountry, searchPostsBySimilarUser, getPostsByUser } from './functions/chuy.js';
@@ -157,6 +157,51 @@ app.post('/api/blocked', async (req, res) => {
     res.status(201).json({ message: 'User followed successfully' });
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+});
+
+// determinar origen de usuario y topic
+app.post('/api/userFromCountry', async (req, res) => {
+  try {
+    const { leftNodeIdentifier, countryName } = req.body;
+    await createFromRelation("User", leftNodeIdentifier, countryName)
+    res.status(201).json({ message: 'User FROM country relation successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.post('/api/topicFromCountry', async (req, res) => {
+  try {
+    const { leftNodeIdentifier, countryName } = req.body;
+    await createFromRelation("Topic", leftNodeIdentifier, countryName)
+    res.status(201).json({ message: 'Topic FROM country relation successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// editar valores de usuario
+app.post('/api/topicFromCountry', async (req, res) => {
+  try {
+    const { user_name, born, first_name, last_name, gender } = req.body;
+    await updateUser(user_name, born, first_name, last_name, gender)
+    res.status(201).json({ message: 'Topic FROM country relation successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+//eliminar posts
+app.delete('api/deletepost/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+      await deletePostById(id);
+      res.status(200).json({ message: `Post con id '${id}' eliminado correctamente.` });
+  } catch (error) {
+      console.error("Error eliminando el Post:", error);
+      res.status(500).json({ error: "Ocurrió un error al eliminar el Post." });
   }
 });
 
