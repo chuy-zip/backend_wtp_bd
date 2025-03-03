@@ -3,7 +3,7 @@ import { testConnection, getNodes } from './functions/test.js';
 import { createPost, createUser, createComment, /*, createTopic, createCountry*/ } from './functions/node_creation_functions.js'
 import cors from 'cors';
 
-import { getPostCommentsByID, getPostsWithLimit, getUserByUsername, getUniqueCountries, addUserInterest, changeUserCountry, getPostsByUser } from './functions/chuy.js';
+import { getPostCommentsByID, getPostsWithLimit, getUserByUsername, getUniqueCountries, addUserInterest, changeUserCountry, searchPostsBySimilarUser, getPostsByUser } from './functions/chuy.js';
 
 
 const port = 3000
@@ -212,6 +212,33 @@ app.get('/api/get-posts-user/:username', async (req, res) => {
           res.status(404).json({
               message: 'No posts found for this user',
               posts: [],
+          });
+      }
+  } catch (error) {
+      console.error('Error in API:', error);
+      res.status(500).json({ message: 'An error occurred', error: error.message });
+  }
+});
+
+app.get('/api/search-posts-leven/:username', async (req, res) => {
+  const { username } = req.params;
+
+  if (!username) {
+      return res.status(400).json({ message: 'Missing parameter: username is required' });
+  }
+
+  try {
+      const result = await searchPostsBySimilarUser(username);
+
+      if (result.status === 'success') {
+          res.status(200).json({
+              message: 'Posts found',
+              posts: result.posts
+          });
+      } else {
+          res.status(404).json({
+              message: 'No posts found',
+              posts: []
           });
       }
   } catch (error) {
