@@ -31,3 +31,13 @@ POST > http://127.0.0.1:3000/api/comment
     "isPinned": false, 
     "language":"english"
 }
+
+CREATE TOPIC
+POST > http://127.0.0.1:3000/api/createTopic
+{ 
+    "name": "",
+    "description": "",
+    "user_name": "",
+    "source": "Web",
+    "visibility" : "public"
+}
