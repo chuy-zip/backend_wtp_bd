@@ -306,7 +306,7 @@ app.delete('/api/deletePostsByUser', async (req, res) => {
       await deletePostsByUser(user_name);
       res.status(200).json({ message: `Todos los Posts del usuario '${user_name}' fueron eliminados.` });
   } catch (error) {
-      res.status(500).json({ error: 'Error eliminando los Posts.' });
+      res.status(500).json({ error: 'Error eliminando los Posts.', error });
   }
 });
 
