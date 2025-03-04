@@ -521,3 +521,43 @@ export async function deletePostById(postId) {
         await session.close();
     }
 }
+
+export async function deletePropertiesFromNode(nodeLabel, nodeKey, keyValue, properties) {
+    const session = driver.session();
+
+    try {
+        const removeQuery = properties.map(prop => `REMOVE n.${prop}`).join('\n');
+
+        const query = `
+            MATCH (n:${nodeLabel} {${nodeKey}: $keyValue})
+            ${removeQuery}
+        `;
+
+        await session.run(query, { keyValue });
+        console.log(`Propiedades eliminadas del nodo ${nodeLabel} con ${nodeKey} = '${keyValue}'.`);
+    } catch (error) {
+        console.error("Error al eliminar propiedades del nodo:", error);
+    } finally {
+        await session.close();
+    }
+}
+
+export async function deletePropertiesFromMultipleNodes(nodeLabel, properties) {
+    const session = driver.session();
+
+    try {
+        const removeQuery = properties.map(prop => `REMOVE n.${prop}`).join('\n');
+
+        const query = `
+            MATCH (n:${nodeLabel})
+            ${removeQuery}
+        `;
+
+        await session.run(query);
+        console.log(`Propiedades eliminadas de todos los nodos ${nodeLabel}.`);
+    } catch (error) {
+        console.error("Error al eliminar propiedades de múltiples nodos:", error);
+    } finally {
+        await session.close();
+    }
+}

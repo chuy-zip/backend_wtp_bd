@@ -215,6 +215,40 @@ app.delete('api/deletepost/:id', async (req, res) => {
   }
 });
 
+// eliminar 1 o mas atributos de un solo nodo
+app.delete("/delete-properties-from-node", async (req, res) => {
+  const { nodeLabel, nodeKey, keyValue, properties } = req.body;
+  if (!nodeLabel || !nodeKey || !keyValue || !properties || !Array.isArray(properties)) {
+      return res.status(400).send("Faltan datos o 'properties' no es un array.");
+  }
+
+  try {
+      await deletePropertiesFromNode(nodeLabel, nodeKey, keyValue, properties);
+      res.status(200).send(`Propiedades eliminadas del nodo ${nodeLabel} con ${nodeKey} = '${keyValue}'.`);
+  } catch (error) {
+      console.error("Error al eliminar propiedades del nodo:", error);
+      res.status(500).send("Error al eliminar propiedades del nodo.");
+  }
+});
+
+//elimina 1 o más propiedades de multiples nodos
+app.delete("/delete-properties-from-multiple-nodes", async (req, res) => {
+  const { nodeLabel, properties } = req.body;
+
+  if (!nodeLabel || !properties || !Array.isArray(properties)) {
+      return res.status(400).send("Faltan datos o 'properties' no es un array.");
+  }
+
+  try {
+      await deletePropertiesFromMultipleNodes(nodeLabel, properties);
+      res.status(200).send(`Propiedades eliminadas de todos los nodos ${nodeLabel}.`);
+  } catch (error) {
+      console.error("Error al eliminar propiedades de múltiples nodos:", error);
+      res.status(500).send("Error al eliminar propiedades de múltiples nodos.");
+  }
+});
+
+
 // de chuy
 app.get('/api/get-user/:username', async (req, res) => {
   const { username } = req.params;
