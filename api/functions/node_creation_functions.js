@@ -634,3 +634,88 @@ export async function deletePostsByUser(user_name) {
         await session.close();
     }
 }
+
+// crea propiedades en relaciones
+export async function addPropertiesToRelation(
+    node1Type, node1IdentifierName, node1IdentifierValue,
+    node2Type, node2IdentifierName, node2IdentifierValue,
+    relationType, propertiesToAdd
+  ) {
+    const session = driver.session();
+  
+    try {
+      const setClause = Object.keys(propertiesToAdd)
+        .map(prop => `r.${prop} = $${prop}`)
+        .join(', ');
+  
+      const params = {
+        node1IdentifierValue,
+        node2IdentifierValue,
+        ...propertiesToAdd
+      };
+  
+      const query = `
+        MATCH (n1:${node1Type} {${node1IdentifierName}: $node1IdentifierValue})
+              -[r:${relationType}]- 
+              (n2:${node2Type} {${node2IdentifierName}: $node2IdentifierValue})
+        SET ${setClause}
+      `;
+  
+      await session.run(query, params);
+  
+      console.log(`Propiedades ${Object.keys(propertiesToAdd)} agregadas a la relación ${relationType} entre ${node1Type} y ${node2Type}.`);
+    } catch (error) {
+      console.error("Error adding properties to relation:", error);
+    } finally {
+      await session.close();
+    }
+  }
+
+  export async function addPropertiesToAllRelations(relationType, propertiesToAdd) {
+    const session = driver.session();
+  
+    try {
+      const setClause = Object.keys(propertiesToAdd)
+        .map(prop => `r.${prop} = $${prop}`)
+        .join(', ');
+  
+      const query = `
+        MATCH ()-[r:${relationType}]-()
+        SET ${setClause}
+      `;
+  
+      await session.run(query, propertiesToAdd);
+  
+      console.log(`Propiedades ${Object.keys(propertiesToAdd)} agregadas a todas las relaciones de tipo ${relationType}.`);
+    } catch (error) {
+      console.error("Error adding properties to all relations:", error);
+    } finally {
+      await session.close();
+    }
+  }
+  
+  export async function checkFollowsRelation(user1Name, user2Name) {
+    const session = driver.session();
+  
+    try {
+      const query = `
+        MATCH (u1:User {user_name: $user1Name})-[r:FOLLOWS]->(u2:User {user_name: $user2Name})
+        RETURN COUNT(r) AS relationCount
+      `;
+  
+      const result = await session.run(query, {
+        user1Name,
+        user2Name,
+      });
+  
+      const relationCount = result.records[0].get('relationCount').toNumber();
+  
+      return relationCount > 0;
+    } catch (error) {
+      console.error("Error checking FOLLOWS relation:", error);
+      return false;
+    } finally {
+      await session.close();
+    }
+  }
+  

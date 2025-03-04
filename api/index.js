@@ -1,6 +1,6 @@
 import express from 'express';
 import { testConnection, getNodes } from './functions/test.js';
-import { createPost, createUser, createComment, createTopic, createCountry, connectPostToTopic, likeNode, dislikeNode, followUser, blockUser, createFromRelation, updateUser, deletePostById, createAdmin, deletePropertiesFromNode, deletePropertiesFromMultipleNodes, deletePropertiesFromAllRelations, deletePropertiesFromRelation, deletePostsByUser  } from './functions/node_creation_functions.js'
+import { createPost, createUser, createComment, createTopic, createCountry, connectPostToTopic, likeNode, dislikeNode, followUser, blockUser, createFromRelation, updateUser, deletePostById, createAdmin, deletePropertiesFromNode, deletePropertiesFromMultipleNodes, deletePropertiesFromAllRelations, deletePropertiesFromRelation, deletePostsByUser, addPropertiesToRelation, addPropertiesToAllRelations, checkFollowsRelation  } from './functions/node_creation_functions.js'
 import cors from 'cors';
 
 import { getPostCommentsByID, getPostsWithLimit, getUserByUsername, getUniqueCountries, addUserInterest, changeUserCountry, searchPostsBySimilarUser, getPostsByUser, markPostAsBanned, banPostsByTopicName, resetLikesAndDislikesByUser, updateFollowType, updateBlockedReasonIfPermanent} from './functions/chuy.js';
@@ -310,6 +310,52 @@ app.delete('/api/deletePostsByUser', async (req, res) => {
   }
 });
 
+// agrega propiedades a la relación entre 2 nodos
+app.post('/api/addPropertiesToRelation', async (req, res) => {
+  try {
+    const {
+      node1Type, node1IdentifierName, node1IdentifierValue,
+      node2Type, node2IdentifierName, node2IdentifierValue,
+      relationType, propertiesToAdd
+    } = req.body;
+
+    await addPropertiesToRelation(
+      node1Type, node1IdentifierName, node1IdentifierValue,
+      node2Type, node2IdentifierName, node2IdentifierValue,
+      relationType, propertiesToAdd
+    );
+
+    res.status(200).json({ message: 'Properties added to relation successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// agrega propiedades a todas las relaciones llamadas igual
+app.post('/api/addPropertiesToAllRelations', async (req, res) => {
+  try {
+    const { relationType, propertiesToAdd } = req.body;
+
+    await addPropertiesToAllRelations(relationType, propertiesToAdd);
+
+    res.status(200).json({ message: 'Properties added to all relations successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// checkea si un user ya sigue a otro
+app.post('/api/checkFollowsRelation', async (req, res) => {
+  try {
+    const { user1Name, user2Name } = req.body;
+
+    const exists = await checkFollowsRelation(user1Name, user2Name);
+
+    res.status(200).json({ followsRelationExists: exists });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 // de chuy
 app.get('/api/get-user/:username', async (req, res) => {
