@@ -248,7 +248,7 @@ export async function changeUserCountry(username, newCountry) {
         const query = `
         MATCH (user:User)-[:CREATED]->(post:Post)
         WITH user, post, apoc.text.levenshteinSimilarity(user.user_name, $username) AS similarity
-        WHERE similarity > 0.5 // Ajusta el umbral de similitud según sea necesario
+        WHERE similarity > 0.5
         RETURN user, post, similarity
         ORDER BY similarity DESC, post.created_at DESC
         LIMIT 20;
@@ -269,6 +269,93 @@ export async function changeUserCountry(username, newCountry) {
         }
     } catch (error) {
         console.error('Error searching posts:', error);
+        throw error;
+    } finally {
+        await session.close();
+    }
+}
+
+export async function markPostAsBanned(postId) {
+    const driver = getDriver();
+    const session = driver.session();
+    console.log("again:", postId)
+    try {
+        const query = `
+        MATCH (post:Post {id: $postId})
+        SET post.banned = true
+        RETURN post
+        `;
+
+        const result = await session.run(query, { postId: parseInt(postId) });
+
+        if (result.records.length > 0) {
+            const updatedPost = convertProperties(result.records[0].get('post').properties);
+            return { status: 'success', post: updatedPost };
+        } else {
+            return { status: 'post_not_found' };
+        }
+    } catch (error) {
+        console.error('Error marking post as banned:', error);
+        throw error;
+    } finally {
+        await session.close();
+    }
+}
+
+export async function banPostsByTopicName(topicName) {
+    const driver = getDriver();
+    const session = driver.session();
+
+    try {
+        const query = `
+        MATCH (topic:Topic {name: $topicName})<-[:RELATED]-(post:Post)
+        SET post.banned = true
+        RETURN post
+        `;
+
+        const result = await session.run(query, { topicName });
+
+        if (result.records.length > 0) {
+            const bannedPosts = result.records.map(record => ({
+                post: convertProperties(record.get('post').properties),
+            }));
+
+            return { status: 'success', bannedPosts };
+        } else {
+            return { status: 'no_posts_found_for_topic' };
+        }
+    } catch (error) {
+        console.error('Error banning posts by topic name:', error);
+        throw error;
+    } finally {
+        await session.close();
+    }
+}
+
+export async function resetLikesAndDislikesByUser(username) {
+    const driver = getDriver();
+    const session = driver.session();
+
+    try {
+        const query = `
+        MATCH (user:User {user_name: $username})-[:CREATED]->(post:Post)
+        SET post.likes = 0, post.dislikes = 0
+        RETURN post
+        `;
+
+        const result = await session.run(query, { username });
+
+        if (result.records.length > 0) {
+            const updatedPosts = result.records.map(record => ({
+                post: convertProperties(record.get('post').properties),
+            }));
+
+            return { status: 'success', updatedPosts };
+        } else {
+            return { status: 'no_posts_found_for_user' };
+        }
+    } catch (error) {
+        console.error('Error resetting likes and dislikes:', error);
         throw error;
     } finally {
         await session.close();
