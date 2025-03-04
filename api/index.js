@@ -3,7 +3,7 @@ import { testConnection, getNodes } from './functions/test.js';
 import { createPost, createUser, createComment, createTopic, createCountry, connectPostToTopic, likeNode, dislikeNode, followUser, blockUser, createFromRelation, updateUser, deletePostById, createAdmin  } from './functions/node_creation_functions.js'
 import cors from 'cors';
 
-import { getPostCommentsByID, getPostsWithLimit, getUserByUsername, getUniqueCountries, addUserInterest, changeUserCountry, searchPostsBySimilarUser, getPostsByUser } from './functions/chuy.js';
+import { getPostCommentsByID, getPostsWithLimit, getUserByUsername, getUniqueCountries, addUserInterest, changeUserCountry, searchPostsBySimilarUser, getPostsByUser, markPostAsBanned, banPostsByTopicName, resetLikesAndDislikesByUser } from './functions/chuy.js';
 
 
 const port = 3000
@@ -427,7 +427,86 @@ app.get('/api/search-posts-leven/:username', async (req, res) => {
   }
 });
 
+app.post('/api/mark-post-banned/:postId', async (req, res) => {
+  const { postId } = req.params; 
+
+  if (!postId) {
+      return res.status(400).json({ message: 'Missing parameter: postId is required' });
+  }
+
+  try {
+      const result = await markPostAsBanned(postId);
+
+      console.log(postId); // Para depuración
+      if (result.status === 'success') {
+          res.status(200).json({
+              message: 'Post marked as banned successfully',
+              post: result.post,
+          });
+      } else if (result.status === 'post_not_found') {
+          res.status(404).json({
+              message: 'Post not found',
+          });
+      }
+  } catch (error) {
+      console.error('Error in API:', error);
+      res.status(500).json({ message: 'An error occurred', error: error.message });
+  }
+});
+
+app.post('/api/ban-posts-by-topic-name/:topicName', async (req, res) => {
+  const { topicName } = req.params;
+
+  if (!topicName) {
+      return res.status(400).json({ message: 'Missing parameter: topicName is required' });
+  }
+
+  try {
+      const result = await banPostsByTopicName(topicName);
+
+      if (result.status === 'success') {
+          res.status(200).json({
+              message: 'Posts banned successfully',
+              bannedPosts: result.bannedPosts,
+          });
+      } else if (result.status === 'no_posts_found_for_topic') {
+          res.status(404).json({
+              message: 'No posts found for the specified topic',
+          });
+      }
+  } catch (error) {
+      console.error('Error in API:', error);
+      res.status(500).json({ message: 'An error occurred', error: error.message });
+  }
+});
+
+app.post('/api/reset-likes-dislikes-by-user/:username', async (req, res) => {
+  const { username } = req.params;
+
+  if (!username) {
+      return res.status(400).json({ message: 'Missing parameter: username is required' });
+  }
+
+  try {
+      const result = await resetLikesAndDislikesByUser(username);
+
+      if (result.status === 'success') {
+          res.status(200).json({
+              message: 'Likes and dislikes reset successfully',
+              updatedPosts: result.updatedPosts,
+          });
+      } else if (result.status === 'no_posts_found_for_user') {
+          res.status(404).json({
+              message: 'No posts found for the specified user',
+          });
+      }
+  } catch (error) {
+      console.error('Error in API:', error);
+      res.status(500).json({ message: 'An error occurred', error: error.message });
+  }
+});
 
 app.listen(port, () => {
   console.log(`Server listening at http://127.0.0.1:${port}`)
 })
+
