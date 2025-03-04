@@ -1,6 +1,6 @@
 import express from 'express';
 import { testConnection, getNodes } from './functions/test.js';
-import { createPost, createUser, createComment, createTopic, createCountry, connectPostToTopic, likeNode, dislikeNode, followUser, blockUser, createFromRelation, updateUser, deletePostById, createAdmin, deletePropertiesFromNode, deletePropertiesFromMultipleNodes, deletePropertiesFromAllRelations, deletePropertiesFromRelation, deletePostsByUser, addPropertiesToRelation, addPropertiesToAllRelations, checkFollowsRelation  } from './functions/node_creation_functions.js'
+import { createPost, createUser, createComment, createTopic, createCountry, connectPostToTopic, likeNode, dislikeNode, followUser, blockUser, createFromRelation, updateUser, deletePostById, createAdmin, deletePropertiesFromNode, deletePropertiesFromMultipleNodes, deletePropertiesFromAllRelations, deletePropertiesFromRelation, deletePostsByUser, addPropertiesToRelation, addPropertiesToAllRelations, checkFollowsRelation, unfollowUser  } from './functions/node_creation_functions.js'
 import cors from 'cors';
 
 import { getPostCommentsByID, getPostsWithLimit, getUserByUsername, getUniqueCountries, addUserInterest, changeUserCountry, searchPostsBySimilarUser, getPostsByUser, markPostAsBanned, banPostsByTopicName, resetLikesAndDislikesByUser, updateFollowType, updateBlockedReasonIfPermanent} from './functions/chuy.js';
@@ -356,6 +356,20 @@ app.post('/api/checkFollowsRelation', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+// unfollow
+app.post('/api/unfollowUser', async (req, res) => {
+  try {
+    const { followerName, followedName } = req.body;
+
+    await unfollowUser(followerName, followedName);
+
+    res.status(200).json({ message: `${followerName} dejó de seguir a ${followedName}` });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 
 // de chuy
 app.get('/api/get-user/:username', async (req, res) => {
