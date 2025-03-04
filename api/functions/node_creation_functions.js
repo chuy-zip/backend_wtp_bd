@@ -6,10 +6,11 @@ export async function createPost(username, text, imagen, hashtags, reposted = fa
 
     try {
         const idResult = await session.run(
-            'MATCH (p:Post) RETURN p.id ORDER BY p.id DESC LIMIT 1'
+            'MATCH (p:Post) RETURN p.id AS id ORDER BY id DESC LIMIT 1'
         );
-        
-        const highestId = idResult.records.length > 0 ? idResult.records[0].get('p.id').toNumber() : 0;
+        console.log(idResult.records[0].get('id'));
+
+        const highestId = idResult.records.length > 0 ? idResult.records[0].get('id') : 0;
         const newId = highestId + 1;
 
 
@@ -114,7 +115,7 @@ export async function createComment(text, reposted = false, postId, username, wr
             'MATCH (c:Comment) RETURN c.id ORDER BY c.id DESC LIMIT 1'
         );
 
-        const highestId = idResult.records.length > 0 ? idResult.records[0].get('c.id').toNumber() : 0;
+        const highestId = idResult.records.length > 0 ? idResult.records[0].get('c.id') : 0;
         const newId = highestId + 1;
 
         const query = `
@@ -158,7 +159,7 @@ export async function createTopic( name, description, user_name, source, visibil
             'MATCH (t:Topic) RETURN t.id ORDER BY t.id DESC LIMIT 1'
         );
         
-        const highestId = idResult.records.length > 0 ? idResult.records[0].get('t.id').toNumber() : 0;
+        const highestId = idResult.records.length > 0 ? idResult.records[0].get('t.id') : 0;
         const newId = highestId + 1;
 
         const query = `
@@ -200,7 +201,7 @@ export async function createCountry(name, description, continent, language, coun
             'MATCH (ct:Country) RETURN ct.id ORDER BY ct.id DESC LIMIT 1'
         );
         
-        const highestId = idResult.records.length > 0 ? idResult.records[0].get('ct.id').toNumber() : 0;
+        const highestId = idResult.records.length > 0 ? idResult.records[0].get('ct.id') : 0;
         const newId = highestId + 1;
 
         const query = `
