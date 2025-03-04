@@ -1,6 +1,6 @@
 import express from 'express';
 import { testConnection, getNodes } from './functions/test.js';
-import { createPost, createUser, createComment, createTopic, createCountry, connectPostToTopic, likeNode, dislikeNode, followUser, blockUser, createFromRelation, updateUser, deletePostById, createAdmin, deletePropertiesFromNode, deletePropertiesFromMultipleNodes, deletePropertiesFromAllRelations, deletePropertiesFromRelation, deletePostsByUser, addPropertiesToRelation, addPropertiesToAllRelations, checkFollowsRelation, unfollowUser  } from './functions/node_creation_functions.js'
+import { createPost, createUser, createComment, createTopic, createCountry, connectPostToTopic, likeNode, dislikeNode, followUser, blockUser, createFromRelation, updateUser, deletePostById, createAdmin, deletePropertiesFromNode, deletePropertiesFromMultipleNodes, deletePropertiesFromAllRelations, deletePropertiesFromRelation, deletePostsByUser, addPropertiesToRelation, addPropertiesToAllRelations, checkFollowsRelation, unfollowUser, checkLikeBetweenUserAndPost, checkLikeBetweenUserAndComment  } from './functions/node_creation_functions.js'
 import cors from 'cors';
 
 import { getPostCommentsByID, getPostsWithLimit, getUserByUsername, getUniqueCountries, addUserInterest, changeUserCountry, searchPostsBySimilarUser, getPostsByUser, markPostAsBanned, banPostsByTopicName, resetLikesAndDislikesByUser, updateFollowType, updateBlockedReasonIfPermanent} from './functions/chuy.js';
@@ -369,6 +369,29 @@ app.post('/api/unfollowUser', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+// Verificar LIKE entre User y Post
+app.post('/api/checkLikeUserPost', async (req, res) => {
+  try {
+    const { userName, postId } = req.body;
+    const exists = await checkLikeBetweenUserAndPost(userName, postId);
+    res.status(200).json({ exists });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Verificar LIKE entre User y Comment
+app.post('/api/checkLikeUserComment', async (req, res) => {
+  try {
+    const { userName, commentId } = req.body;
+    const exists = await checkLikeBetweenUserAndComment(userName, commentId);
+    res.status(200).json({ exists });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 
 
 // de chuy

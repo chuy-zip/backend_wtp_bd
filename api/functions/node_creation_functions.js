@@ -260,7 +260,6 @@ export async function likeNode(user_name, nodeId, nodeType, browser, source) {
     const session = driver.session();
 
     try {
-        const timeStamp = new Date();
 
         if (nodeType !== "Post" && nodeType !== "Comment") {
             throw new Error("Invalid nodeType. Must be 'Post' or 'Comment'.");
@@ -268,15 +267,15 @@ export async function likeNode(user_name, nodeId, nodeType, browser, source) {
 
         const query = `
             MATCH (u:User {user_name: $user_name}), (n:${nodeType} {id: $nodeId})
-            CREATE (u)-[:LIKE {
-                time: $timeStamp,
+            CREATE (u)-[:LIKES {
+                time: datetime(),
                 browser: $browser,
                 source: $source
             }]->(n)
             SET n.likes = coalesce(n.likes, 0) + 1
         `;
 
-        await session.run(query, { user_name, nodeId, timeStamp, browser, source });
+        await session.run(query, { user_name, nodeId, browser, source });
 
         console.log(`User ${user_name} liked ${nodeType} ${nodeId} successfully.`);
     } catch (error) {
@@ -290,7 +289,6 @@ export async function dislikeNode(user_name, nodeId, nodeType, browser, source) 
     const session = driver.session();
 
     try {
-        const timeStamp = new Date();
 
         if (nodeType !== "Post" && nodeType !== "Comment") {
             throw new Error("Invalid nodeType. Must be 'Post' or 'Comment'.");
@@ -298,15 +296,15 @@ export async function dislikeNode(user_name, nodeId, nodeType, browser, source) 
 
         const query = `
             MATCH (u:User {user_name: $user_name}), (n:${nodeType} {id: $nodeId})
-            CREATE (u)-[:DISLIKE {
-                time: $timeStamp,
+            CREATE (u)-[:DISLIKES {
+                time: datetime(),
                 browser: $browser,
                 source: $source
             }]->(n)
             SET n.likes = coalesce(n.likes, 0) + 1
         `;
 
-        await session.run(query, { user_name, nodeId, timeStamp, browser, source });
+        await session.run(query, { user_name, nodeId, browser, source });
 
         console.log(`User ${user_name} disliked ${nodeType} ${nodeId} successfully.`);
     } catch (error) {
@@ -707,7 +705,7 @@ export async function addPropertiesToRelation(
         user1Name,
         user2Name,
       });
-  
+      
       const relationCount = result.records[0].get('relationCount').toNumber();
   
       return relationCount > 0;
@@ -744,6 +742,57 @@ export async function addPropertiesToRelation(
       console.log(`${followerName} dejó de seguir a ${followedName}`);
     } catch (error) {
       console.error("Error during unfollow:", error);
+    } finally {
+      await session.close();
+    }
+  }
+  
+
+export async function checkLikeBetweenUserAndPost(userName, postId) {
+    const session = driver.session();
+  
+    try {
+      const query = `
+        MATCH (u1:User {user_name: $userName})-[r:LIKES]->(u2:Post {id: $postId})
+        RETURN COUNT(r) AS relationCount
+      `;
+  
+      const result = await session.run(query, {
+        userName,
+        postId,
+      });
+      
+      const relationCount = result.records[0].get('relationCount').toNumber();
+  
+      return relationCount > 0;
+    } catch (error) {
+      console.error("Error checking FOLLOWS relation:", error);
+      return false;
+    } finally {
+      await session.close();
+    }
+}
+
+export async function checkLikeBetweenUserAndComment(userName, commentId) {
+    const session = driver.session();
+  
+    try {
+      const query = `
+        MATCH (u1:User {user_name: $userName})-[r:LIKES]->(u2:Post {id: $commentId})
+        RETURN COUNT(r) AS relationCount
+      `;
+  
+      const result = await session.run(query, {
+        userName,
+        commentId,
+      });
+      
+      const relationCount = result.records[0].get('relationCount').toNumber();
+  
+      return relationCount > 0;
+    } catch (error) {
+      console.error("Error checking FOLLOWS relation:", error);
+      return false;
     } finally {
       await session.close();
     }
