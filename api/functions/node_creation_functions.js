@@ -71,6 +71,34 @@ export async function createUser(username, password, email, born, first_name, la
 }
 
 
+export async function createAdmin(username, password, email, born, first_name, last_name, gender) {
+    const query = `
+        CREATE (u:User:Admin {
+            user_name: $username,
+            password: $password,
+            email: $email,
+            born: $born,
+            first_name: $first_name,
+            last_name: $last_name,
+            gender: $gender,
+            followers: 0,
+            following: 0,
+            verified: false
+        })
+    `;
+
+    const session = driver.session();
+
+    try {
+        await session.run(query, { username, password, email, born, first_name, last_name, gender });
+        console.log("User created successfully.");
+    } catch (error) {
+        console.error("Error executing query:", error);
+    } finally {
+        await session.close();
+    }
+}
+
 export async function createComment(text, reposted = false, postId, username, writterIsActive, isPinned = false, language = "english") {
     const session = driver.session();
 

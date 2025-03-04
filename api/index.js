@@ -1,6 +1,6 @@
 import express from 'express';
 import { testConnection, getNodes } from './functions/test.js';
-import { createPost, createUser, createComment, createTopic, createCountry, connectPostToTopic, likeNode, dislikeNode, followUser, blockUser, createFromRelation, updateUser, deletePostById  } from './functions/node_creation_functions.js'
+import { createPost, createUser, createComment, createTopic, createCountry, connectPostToTopic, likeNode, dislikeNode, followUser, blockUser, createFromRelation, updateUser, deletePostById, createAdmin  } from './functions/node_creation_functions.js'
 import cors from 'cors';
 
 import { getPostCommentsByID, getPostsWithLimit, getUserByUsername, getUniqueCountries, addUserInterest, changeUserCountry, searchPostsBySimilarUser, getPostsByUser } from './functions/chuy.js';
@@ -59,6 +59,16 @@ app.post('/api/registerUser', async (req, res) => {
     const { username, password, email, born, first_name, last_name, gender } = req.body;
     await createUser(username, password, email, born, first_name, last_name, gender);
     res.status(201).json({ message: 'User created successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.post('/api/registerAdmin', async (req, res) => {
+  try {
+    const { username, password, email, born, first_name, last_name, gender } = req.body;
+    await createAdmin(username, password, email, born, first_name, last_name, gender);
+    res.status(201).json({ message: 'Admin created successfully' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
