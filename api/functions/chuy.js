@@ -388,3 +388,34 @@ export async function updateFollowType(followerUsername, followedUsername, newFo
         await session.close();
     }
 }
+
+export async function updateBlockedReasonIfPermanent(new_reason) {
+    const driver = getDriver();
+    const session = driver.session();
+
+    try {
+        const query = `
+        MATCH (user:User)-[blocked:BLOCKED]->(blockedUser:User)
+        WHERE blocked.is_permanent = true
+        SET blocked.reason = $new_reason
+        RETURN blocked
+        `;
+
+        const result = await session.run(query, { new_reason });
+
+        if (result.records.length > 0) {
+            const updatedRelationships = result.records.map(record => ({
+                blocked: convertProperties(record.get('blocked').properties),
+            }));
+
+            return { status: 'success', updatedRelationships };
+        } else {
+            return { status: 'no_blocked_relationships_found' };
+        }
+    } catch (error) {
+        console.error('Error updating blocked relationships:', error);
+        throw error;
+    } finally {
+        await session.close();
+    }
+}

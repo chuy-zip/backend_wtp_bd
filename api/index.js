@@ -3,7 +3,7 @@ import { testConnection, getNodes } from './functions/test.js';
 import { createPost, createUser, createComment, createTopic, createCountry, connectPostToTopic, likeNode, dislikeNode, followUser, blockUser, createFromRelation, updateUser, deletePostById  } from './functions/node_creation_functions.js'
 import cors from 'cors';
 
-import { getPostCommentsByID, getPostsWithLimit, getUserByUsername, getUniqueCountries, addUserInterest, changeUserCountry, searchPostsBySimilarUser, getPostsByUser, markPostAsBanned, banPostsByTopicName, resetLikesAndDislikesByUser, updateFollowType} from './functions/chuy.js';
+import { getPostCommentsByID, getPostsWithLimit, getUserByUsername, getUniqueCountries, addUserInterest, changeUserCountry, searchPostsBySimilarUser, getPostsByUser, markPostAsBanned, banPostsByTopicName, resetLikesAndDislikesByUser, updateFollowType, updateBlockedReasonIfPermanent} from './functions/chuy.js';
 
 
 const port = 3000
@@ -482,6 +482,27 @@ app.post('/api/update-follow-type', async (req, res) => {
       } else if (result.status === 'follow_relationship_not_found') {
           res.status(404).json({
               message: 'Follow relationship not found between the specified users',
+          });
+      }
+  } catch (error) {
+      console.error('Error in API:', error);
+      res.status(500).json({ message: 'An error occurred', error: error.message });
+  }
+});
+
+app.post('/api/update-blocked-reason-if-permanent/:new_reason', async (req, res) => {
+  try {
+    const { new_reason } = req.params;
+      const result = await updateBlockedReasonIfPermanent(new_reason);
+
+      if (result.status === 'success') {
+          res.status(200).json({
+              message: 'Blocked relationships updated successfully',
+              updatedRelationships: result.updatedRelationships,
+          });
+      } else if (result.status === 'no_blocked_relationships_found') {
+          res.status(404).json({
+              message: 'No blocked relationships with is_permanent = true found',
           });
       }
   } catch (error) {
