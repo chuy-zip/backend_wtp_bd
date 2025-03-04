@@ -397,7 +397,7 @@ export async function blockUser(blockerUsername, blockedUsername, reason, isPerm
             MATCH (blocker:User {user_name: $blockerUsername})
             MATCH (blocked:User {user_name: $blockedUsername})
             CREATE (blocker)-[:BLOCKED {
-                time_stamp: $timeStamp,
+                time_stamp: datetime(),
                 reason: $reason,
                 is_permanent: $isPermanent
             }]->(blocked)
