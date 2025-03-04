@@ -55,6 +55,7 @@ export async function getPostsByUser(username) {
         const query = `
         MATCH (user:User {user_name: $username})-[created:CREATED]->(post:Post)
         RETURN user, post
+        ORDER BY post.id DESC
         `;
 
         const result = await session.run(query, { username });
@@ -62,7 +63,7 @@ export async function getPostsByUser(username) {
         if (result.records.length > 0) {
             const posts = result.records.map(record => ({
                 post: convertProperties(record.get('post').properties),
-                author: convertProperties(record.get('user').properties) // Ahora sí existe en el query
+                author: convertProperties(record.get('user').properties)
             }));
 
             return { status: 'success', posts };
@@ -76,7 +77,6 @@ export async function getPostsByUser(username) {
         await session.close();
     }
 }
-
 
 export async function getPostsWithLimit(post_limit) {
     const driver = getDriver();
@@ -240,15 +240,15 @@ export async function changeUserCountry(username, newCountry) {
 }
 
 
-  export async function searchPostsBySimilarUser(username) {
+export async function searchPostsBySimilarUser(username) {
     const driver = getDriver();
     const session = driver.session();
 
     try {
         const query = `
         MATCH (user:User)-[:CREATED]->(post:Post)
-        WITH user, post, apoc.text.levenshteinSimilarity(user.user_name, $username) AS similarity
-        WHERE similarity > 0.5
+        WITH user, post, apoc.text.levenshteinSimilarity(toLower(user.user_name), toLower($username)) AS similarity
+        WHERE similarity > 0.4
         RETURN user, post, similarity
         ORDER BY similarity DESC, post.created_at DESC
         LIMIT 20;
@@ -260,7 +260,7 @@ export async function changeUserCountry(username, newCountry) {
             const posts = result.records.map(record => ({
                 post: convertProperties(record.get('post').properties),
                 author: convertProperties(record.get('user').properties),
-                similarity: record.get('similarity') // Para depuración o análisis
+                similarity: record.get('similarity') 
             }));
 
             return { status: 'success', posts };
@@ -274,6 +274,7 @@ export async function changeUserCountry(username, newCountry) {
         await session.close();
     }
 }
+
 
 export async function markPostAsBanned(postId) {
     const driver = getDriver();
