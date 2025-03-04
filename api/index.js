@@ -1,6 +1,6 @@
 import express from 'express';
 import { testConnection, getNodes } from './functions/test.js';
-import { createPost, createUser, createComment, createTopic, createCountry, connectPostToTopic, likeNode, dislikeNode, followUser, blockUser, createFromRelation, updateUser, deletePostById, createAdmin  } from './functions/node_creation_functions.js'
+import { createPost, createUser, createComment, createTopic, createCountry, connectPostToTopic, likeNode, dislikeNode, followUser, blockUser, createFromRelation, updateUser, deletePostById, createAdmin, deletePropertiesFromNode, deletePropertiesFromMultipleNodes, deletePropertiesFromAllRelations, deletePropertiesFromRelation  } from './functions/node_creation_functions.js'
 import cors from 'cors';
 
 import { getPostCommentsByID, getPostsWithLimit, getUserByUsername, getUniqueCountries, addUserInterest, changeUserCountry, searchPostsBySimilarUser, getPostsByUser, markPostAsBanned, banPostsByTopicName, resetLikesAndDislikesByUser } from './functions/chuy.js';
@@ -216,7 +216,7 @@ app.delete('api/deletepost/:id', async (req, res) => {
 });
 
 // eliminar 1 o mas atributos de un solo nodo
-app.delete("/delete-properties-from-node", async (req, res) => {
+app.delete("/api/delete-properties-from-node", async (req, res) => {
   const { nodeLabel, nodeKey, keyValue, properties } = req.body;
   if (!nodeLabel || !nodeKey || !keyValue || !properties || !Array.isArray(properties)) {
       return res.status(400).send("Faltan datos o 'properties' no es un array.");
@@ -232,7 +232,7 @@ app.delete("/delete-properties-from-node", async (req, res) => {
 });
 
 //elimina 1 o más propiedades de multiples nodos
-app.delete("/delete-properties-from-multiple-nodes", async (req, res) => {
+app.delete("/api/delete-properties-from-multiple-nodes", async (req, res) => {
   const { nodeLabel, properties } = req.body;
 
   if (!nodeLabel || !properties || !Array.isArray(properties)) {
@@ -248,6 +248,51 @@ app.delete("/delete-properties-from-multiple-nodes", async (req, res) => {
   }
 });
 
+
+// eliminar 1 o más propiedades de 1 relación especifica entre 2 nodos
+app.delete('/api/delete-relation-properties-between-nodes', async (req, res) => {
+  const {
+      node1Type,
+      node1IdentifierName,
+      node1IdentifierValue,
+      node2Type,
+      node2IdentifierName,
+      node2IdentifierValue,
+      relationType,
+      propertiesToDelete
+  } = req.body;
+
+  try {
+      await deletePropertiesFromRelation(
+          node1Type,
+          node1IdentifierName,
+          node1IdentifierValue,
+          node2Type,
+          node2IdentifierName,
+          node2IdentifierValue,
+          relationType,
+          propertiesToDelete
+      );
+      res.status(200).send({ message: 'Propiedades eliminadas de la relación.' });
+  } catch (error) {
+      res.status(500).send({
+          error: 'Error eliminando propiedades de la relación.',
+          details: error.message
+      });
+  }
+});
+
+// eliminar 1 o más atributos de todas las relaciones llamadas de la misma forma
+app.delete('/api/delete-relation-properties', async (req, res) => {
+  const { relationType, propertiesToDelete } = req.body;
+
+  try {
+      await deletePropertiesFromAllRelations(relationType, propertiesToDelete);
+      res.status(200).send({ message: 'Propiedades eliminadas de todas las relaciones.' });
+  } catch (error) {
+      res.status(500).send({ error: 'Error eliminando propiedades.', details: error.message });
+  }
+});
 
 // de chuy
 app.get('/api/get-user/:username', async (req, res) => {

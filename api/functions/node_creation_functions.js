@@ -561,3 +561,56 @@ export async function deletePropertiesFromMultipleNodes(nodeLabel, properties) {
         await session.close();
     }
 }
+
+// eliminar 1 o más propiedades de 1 relación especifica entre 2 nodos
+export async function deletePropertiesFromRelation(
+  node1Type, node1IdentifierName, node1IdentifierValue,
+  node2Type, node2IdentifierName, node2IdentifierValue,
+  relationType, propertiesToDelete
+) {
+  const session = driver.session();
+
+  try {
+      const removeClause = propertiesToDelete.map(prop => `r.${prop}`).join(', ');
+
+      const query = `
+          MATCH (n1:${node1Type} {${node1IdentifierName}: $node1IdentifierValue})
+                -[r:${relationType}]- 
+                (n2:${node2Type} {${node2IdentifierName}: $node2IdentifierValue})
+          REMOVE ${removeClause}
+      `;
+
+      await session.run(query, {
+          node1IdentifierValue,
+          node2IdentifierValue,
+      });
+
+      console.log(`Propiedades ${propertiesToDelete} eliminadas de la relación ${relationType} entre ${node1Type} y ${node2Type}.`);
+  } catch (error) {
+      console.error("Error deleting properties from relation:", error);
+  } finally {
+      await session.close();
+  }
+}
+
+// eliminar 1 o más atributos de todas las relaciones llamadas de la misma forma
+export async function deletePropertiesFromAllRelations(relationType, propertiesToDelete) {
+  const session = driver.session();
+
+  try {
+      const removeClause = propertiesToDelete.map(prop => `r.${prop}`).join(', ');
+
+      const query = `
+          MATCH ()-[r:${relationType}]-()
+          REMOVE ${removeClause}
+      `;
+
+      await session.run(query);
+
+      console.log(`Propiedades eliminadas de todas las relaciones de tipo ${relationType}.`);
+  } catch (error) {
+      console.error("Error deleting properties from all relations:", error);
+  } finally {
+      await session.close();
+  }
+}
