@@ -719,3 +719,33 @@ export async function addPropertiesToRelation(
     }
   }
   
+  export async function unfollowUser(followerName, followedName) {
+    const session = driver.session();
+  
+    try {
+      const query = `
+        MATCH (follower:User {user_name: $followerName})-[r:FOLLOWS]->(followed:User {user_name: $followedName})
+        DELETE r
+        SET follower.following = CASE 
+                                    WHEN follower.following > 0 THEN follower.following - 1 
+                                    ELSE 0 
+                                 END,
+            followed.followers = CASE 
+                                    WHEN followed.followers > 0 THEN followed.followers - 1 
+                                    ELSE 0 
+                                 END
+      `;
+  
+      await session.run(query, {
+        followerName,
+        followedName,
+      });
+  
+      console.log(`${followerName} dejó de seguir a ${followedName}`);
+    } catch (error) {
+      console.error("Error during unfollow:", error);
+    } finally {
+      await session.close();
+    }
+  }
+  
