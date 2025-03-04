@@ -3,7 +3,7 @@ import { testConnection, getNodes } from './functions/test.js';
 import { createPost, createUser, createComment, createTopic, createCountry, connectPostToTopic, likeNode, dislikeNode, followUser, blockUser, createFromRelation, updateUser, deletePostById  } from './functions/node_creation_functions.js'
 import cors from 'cors';
 
-import { getPostCommentsByID, getPostsWithLimit, getUserByUsername, getUniqueCountries, addUserInterest, changeUserCountry, searchPostsBySimilarUser, getPostsByUser, markPostAsBanned, banPostsByTopicName, resetLikesAndDislikesByUser } from './functions/chuy.js';
+import { getPostCommentsByID, getPostsWithLimit, getUserByUsername, getUniqueCountries, addUserInterest, changeUserCountry, searchPostsBySimilarUser, getPostsByUser, markPostAsBanned, banPostsByTopicName, resetLikesAndDislikesByUser, updateFollowType} from './functions/chuy.js';
 
 
 const port = 3000
@@ -454,6 +454,34 @@ app.post('/api/reset-likes-dislikes-by-user/:username', async (req, res) => {
       } else if (result.status === 'no_posts_found_for_user') {
           res.status(404).json({
               message: 'No posts found for the specified user',
+          });
+      }
+  } catch (error) {
+      console.error('Error in API:', error);
+      res.status(500).json({ message: 'An error occurred', error: error.message });
+  }
+});
+
+app.post('/api/update-follow-type', async (req, res) => {
+  const { followerUsername, followedUsername, newFollowType } = req.body;
+
+  console.log(followerUsername, followedUsername, newFollowType)
+  
+  if (!followerUsername || !followedUsername || !newFollowType) {
+      return res.status(400).json({ message: 'Missing parameters: followerUsername, followedUsername, and newFollowType are required' });
+  }
+
+  try {
+      const result = await updateFollowType(followerUsername, followedUsername, newFollowType);
+
+      if (result.status === 'success') {
+          res.status(200).json({
+              message: 'Follow type updated successfully',
+              updatedFollow: result.updatedFollow,
+          });
+      } else if (result.status === 'follow_relationship_not_found') {
+          res.status(404).json({
+              message: 'Follow relationship not found between the specified users',
           });
       }
   } catch (error) {

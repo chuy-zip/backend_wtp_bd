@@ -361,3 +361,30 @@ export async function resetLikesAndDislikesByUser(username) {
         await session.close();
     }
 }
+
+export async function updateFollowType(followerUsername, followedUsername, newFollowType) {
+    const driver = getDriver();
+    const session = driver.session();
+
+    try {
+        const query = `
+        MATCH (follower:User {user_name: $followerUsername})-[follows:FOLLOWS]->(followed:User {user_name: $followedUsername})
+        SET follows.follow_type = $newFollowType
+        RETURN follows
+        `;
+
+        const result = await session.run(query, { followerUsername, followedUsername, newFollowType });
+
+        if (result.records.length > 0) {
+            const updatedFollow = convertProperties(result.records[0].get('follows').properties);
+            return { status: 'success', updatedFollow };
+        } else {
+            return { status: 'follow_relationship_not_found' };
+        }
+    } catch (error) {
+        console.error('Error updating follow type:', error);
+        throw error;
+    } finally {
+        await session.close();
+    }
+}
