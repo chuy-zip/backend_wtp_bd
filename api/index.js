@@ -47,7 +47,7 @@ app.post('/api/createPost', async (req, res) => {
   try {
     const { username, text, imagen, hashtags, reposted } = req.body;
     await createPost(username, text, imagen, hashtags, reposted);
-    res.status(201).json({ message: 'Post created successfully' });
+    res.status(200).json({ message: 'Post created successfully' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -58,7 +58,7 @@ app.post('/api/registerUser', async (req, res) => {
   try {
     const { username, password, email, born, first_name, last_name, gender } = req.body;
     await createUser(username, password, email, born, first_name, last_name, gender);
-    res.status(201).json({ message: 'User created successfully' });
+    res.status(200).json({ message: 'User created successfully' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -68,7 +68,7 @@ app.post('/api/registerAdmin', async (req, res) => {
   try {
     const { username, password, email, born, first_name, last_name, gender } = req.body;
     await createAdmin(username, password, email, born, first_name, last_name, gender);
-    res.status(201).json({ message: 'Admin created successfully' });
+    res.status(200).json({ message: 'Admin created successfully' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -79,7 +79,7 @@ app.post('/api/comment', async (req, res) => {
   try {
     const { text, reposted, postId, username, writterIsActive, isPinned, language } = req.body;
     await createComment(text, reposted, postId, username, writterIsActive, isPinned, language)
-    res.status(201).json({ message: 'Comment created successfully' });
+    res.status(200).json({ message: 'Comment created successfully' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -90,7 +90,7 @@ app.post('/api/createTopic', async (req, res) => {
   try {
     const { name, description, user_name, source, visibility } = req.body;
     await createTopic(name, description, user_name, source, visibility)
-    res.status(201).json({ message: 'Topic created successfully' });
+    res.status(200).json({ message: 'Topic created successfully' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -101,7 +101,7 @@ app.post('/api/postBelongsToTopic', async (req, res) => {
   try {
     const { postId, topicId } = req.body;
     await connectPostToTopic(postId, topicId)
-    res.status(201).json({ message: 'Post connected to Topic successfully' });
+    res.status(200).json({ message: 'Post connected to Topic successfully' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -112,7 +112,7 @@ app.post('/api/likePost', async (req, res) => {
   try {
     const { user_name, nodeId, browser, source } = req.body;
     await likeNode(user_name, nodeId, "Post", browser, source)
-    res.status(201).json({ message: 'Post liked successfully' });
+    res.status(200).json({ message: 'Post liked successfully' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -122,7 +122,7 @@ app.post('/api/dislikePost', async (req, res) => {
   try {
     const { user_name, nodeId, browser, source } = req.body;
     await dislikeNode(user_name, nodeId, "Post", browser, source)
-    res.status(201).json({ message: 'Post disliked successfully' });
+    res.status(200).json({ message: 'Post disliked successfully' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -132,7 +132,7 @@ app.post('/api/likeComment', async (req, res) => {
   try {
     const { user_name, nodeId, browser, source } = req.body;
     await likeNode(user_name, nodeId, "Comment", browser, source)
-    res.status(201).json({ message: 'Comment liked successfully' });
+    res.status(200).json({ message: 'Comment liked successfully' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -142,7 +142,7 @@ app.post('/api/dislikeComment', async (req, res) => {
   try {
     const { user_name, nodeId, browser, source } = req.body;
     await dislikeNode(user_name, nodeId, "Comment", browser, source)
-    res.status(201).json({ message: 'Comment liked successfully' });
+    res.status(200).json({ message: 'Comment liked successfully' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -153,7 +153,7 @@ app.post('/api/follow', async (req, res) => {
   try {
     const { followerUsername, followedUsername, followType } = req.body;
     await followUser(followerUsername, followedUsername, followType)
-    res.status(201).json({ message: 'User followed successfully' });
+    res.status(200).json({ message: 'User followed successfully' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -164,7 +164,7 @@ app.post('/api/blocked', async (req, res) => {
   try {
     const { blockerUsername, blockedUsername, reason, isPermanent } = req.body;
     await blockUser(blockerUsername, blockedUsername, reason, isPermanent)
-    res.status(201).json({ message: 'User followed successfully' });
+    res.status(200).json({ message: 'User followed successfully' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -175,7 +175,7 @@ app.post('/api/userFromCountry', async (req, res) => {
   try {
     const { leftNodeIdentifier, countryName } = req.body;
     await createFromRelation("User", leftNodeIdentifier, countryName)
-    res.status(201).json({ message: 'User FROM country relation successfully' });
+    res.status(200).json({ message: 'User FROM country relation successfully' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -185,7 +185,7 @@ app.post('/api/topicFromCountry', async (req, res) => {
   try {
     const { leftNodeIdentifier, countryName } = req.body;
     await createFromRelation("Topic", leftNodeIdentifier, countryName)
-    res.status(201).json({ message: 'Topic FROM country relation successfully' });
+    res.status(200).json({ message: 'Topic FROM country relation successfully' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -196,7 +196,7 @@ app.put('/api/updateUser', async (req, res) => {
   try {
     const { user_name, born, first_name, last_name, gender } = req.body;
     await updateUser(user_name, born, first_name, last_name, gender)
-    res.status(201).json({ message: 'Topic FROM country relation successfully' });
+    res.status(200).json({ message: 'Topic FROM country relation successfully' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -412,7 +412,7 @@ app.post('/api/createCountry', async (req, res) =>{
   try {
     const { name, description, continent, language, country_code } = req.body;
     await createCountry(name, description, continent, language, country_code)
-    res.status(201).json({ message: 'Country created successfully' });
+    res.status(200).json({ message: 'Country created successfully' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
