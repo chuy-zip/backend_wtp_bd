@@ -203,7 +203,7 @@ app.put('/api/updateUser', async (req, res) => {
 });
 
 //eliminar posts
-app.delete('api/deletepost/:id', async (req, res) => {
+app.delete('/api/deletepost/:id', async (req, res) => {
   const { id } = req.params;
 
   try {
