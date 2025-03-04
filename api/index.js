@@ -1,6 +1,6 @@
 import express from 'express';
 import { testConnection, getNodes } from './functions/test.js';
-import { createPost, createUser, createComment, createTopic, createCountry, connectPostToTopic, likeNode, dislikeNode, followUser, blockUser, createFromRelation, updateUser, deletePostById, createAdmin, deletePropertiesFromNode, deletePropertiesFromMultipleNodes, deletePropertiesFromAllRelations, deletePropertiesFromRelation  } from './functions/node_creation_functions.js'
+import { createPost, createUser, createComment, createTopic, createCountry, connectPostToTopic, likeNode, dislikeNode, followUser, blockUser, createFromRelation, updateUser, deletePostById, createAdmin, deletePropertiesFromNode, deletePropertiesFromMultipleNodes, deletePropertiesFromAllRelations, deletePropertiesFromRelation, deletePostsByUser  } from './functions/node_creation_functions.js'
 import cors from 'cors';
 
 import { getPostCommentsByID, getPostsWithLimit, getUserByUsername, getUniqueCountries, addUserInterest, changeUserCountry, searchPostsBySimilarUser, getPostsByUser, markPostAsBanned, banPostsByTopicName, resetLikesAndDislikesByUser, updateFollowType, updateBlockedReasonIfPermanent} from './functions/chuy.js';
@@ -293,6 +293,23 @@ app.delete('/api/delete-relation-properties', async (req, res) => {
       res.status(500).send({ error: 'Error eliminando propiedades.', details: error.message });
   }
 });
+
+// elimina todos los posts de un usuario
+app.delete('/api/deletePostsByUser', async (req, res) => {
+  const { user_name } = req.body;
+
+  if (!user_name) {
+      return res.status(400).json({ error: "El 'user_name' es obligatorio." });
+  }
+
+  try {
+      await deletePostsByUser(user_name);
+      res.status(200).json({ message: `Todos los Posts del usuario '${user_name}' fueron eliminados.` });
+  } catch (error) {
+      res.status(500).json({ error: 'Error eliminando los Posts.' });
+  }
+});
+
 
 // de chuy
 app.get('/api/get-user/:username', async (req, res) => {

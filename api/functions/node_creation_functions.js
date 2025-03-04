@@ -615,3 +615,22 @@ export async function deletePropertiesFromAllRelations(relationType, propertiesT
       await session.close();
   }
 }
+
+// eliman todos los posto de un usuario
+export async function deletePostsByUser(user_name) {
+    const session = driver.session();
+
+    try {
+        const query = `
+            MATCH (u:User {user_name: $user_name})-[:CREATED]->(p:Post)
+            DETACH DELETE p
+        `;
+
+        await session.run(query, { user_name });
+        console.log(`Todos los Posts del usuario '${user_name}' han sido eliminados.`);
+    } catch (error) {
+        console.error("Error al eliminar Posts:", error);
+    } finally {
+        await session.close();
+    }
+}
