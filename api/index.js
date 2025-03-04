@@ -1,6 +1,6 @@
 import express from 'express';
 import { testConnection, getNodes } from './functions/test.js';
-import { createPost, createUser, createComment, createTopic, createCountry, connectPostToTopic, likeNode, dislikeNode, followUser, blockUser, createFromRelation, updateUser, deletePostById  } from './functions/node_creation_functions.js'
+import { createPost, createUser, createComment, createTopic, createCountry, connectPostToTopic, likeNode, dislikeNode, followUser, blockUser, createFromRelation, updateUser, deletePostById, createAdmin, deletePropertiesFromNode, deletePropertiesFromMultipleNodes, deletePropertiesFromAllRelations, deletePropertiesFromRelation  } from './functions/node_creation_functions.js'
 import cors from 'cors';
 
 import { getPostCommentsByID, getPostsWithLimit, getUserByUsername, getUniqueCountries, addUserInterest, changeUserCountry, searchPostsBySimilarUser, getPostsByUser, markPostAsBanned, banPostsByTopicName, resetLikesAndDislikesByUser, updateFollowType, updateBlockedReasonIfPermanent} from './functions/chuy.js';
@@ -59,6 +59,16 @@ app.post('/api/registerUser', async (req, res) => {
     const { username, password, email, born, first_name, last_name, gender } = req.body;
     await createUser(username, password, email, born, first_name, last_name, gender);
     res.status(201).json({ message: 'User created successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.post('/api/registerAdmin', async (req, res) => {
+  try {
+    const { username, password, email, born, first_name, last_name, gender } = req.body;
+    await createAdmin(username, password, email, born, first_name, last_name, gender);
+    res.status(201).json({ message: 'Admin created successfully' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -202,6 +212,85 @@ app.delete('api/deletepost/:id', async (req, res) => {
   } catch (error) {
       console.error("Error eliminando el Post:", error);
       res.status(500).json({ error: "Ocurrió un error al eliminar el Post." });
+  }
+});
+
+// eliminar 1 o mas atributos de un solo nodo
+app.delete("/api/delete-properties-from-node", async (req, res) => {
+  const { nodeLabel, nodeKey, keyValue, properties } = req.body;
+  if (!nodeLabel || !nodeKey || !keyValue || !properties || !Array.isArray(properties)) {
+      return res.status(400).send("Faltan datos o 'properties' no es un array.");
+  }
+
+  try {
+      await deletePropertiesFromNode(nodeLabel, nodeKey, keyValue, properties);
+      res.status(200).send(`Propiedades eliminadas del nodo ${nodeLabel} con ${nodeKey} = '${keyValue}'.`);
+  } catch (error) {
+      console.error("Error al eliminar propiedades del nodo:", error);
+      res.status(500).send("Error al eliminar propiedades del nodo.");
+  }
+});
+
+//elimina 1 o más propiedades de multiples nodos
+app.delete("/api/delete-properties-from-multiple-nodes", async (req, res) => {
+  const { nodeLabel, properties } = req.body;
+
+  if (!nodeLabel || !properties || !Array.isArray(properties)) {
+      return res.status(400).send("Faltan datos o 'properties' no es un array.");
+  }
+
+  try {
+      await deletePropertiesFromMultipleNodes(nodeLabel, properties);
+      res.status(200).send(`Propiedades eliminadas de todos los nodos ${nodeLabel}.`);
+  } catch (error) {
+      console.error("Error al eliminar propiedades de múltiples nodos:", error);
+      res.status(500).send("Error al eliminar propiedades de múltiples nodos.");
+  }
+});
+
+
+// eliminar 1 o más propiedades de 1 relación especifica entre 2 nodos
+app.delete('/api/delete-relation-properties-between-nodes', async (req, res) => {
+  const {
+      node1Type,
+      node1IdentifierName,
+      node1IdentifierValue,
+      node2Type,
+      node2IdentifierName,
+      node2IdentifierValue,
+      relationType,
+      propertiesToDelete
+  } = req.body;
+
+  try {
+      await deletePropertiesFromRelation(
+          node1Type,
+          node1IdentifierName,
+          node1IdentifierValue,
+          node2Type,
+          node2IdentifierName,
+          node2IdentifierValue,
+          relationType,
+          propertiesToDelete
+      );
+      res.status(200).send({ message: 'Propiedades eliminadas de la relación.' });
+  } catch (error) {
+      res.status(500).send({
+          error: 'Error eliminando propiedades de la relación.',
+          details: error.message
+      });
+  }
+});
+
+// eliminar 1 o más atributos de todas las relaciones llamadas de la misma forma
+app.delete('/api/delete-relation-properties', async (req, res) => {
+  const { relationType, propertiesToDelete } = req.body;
+
+  try {
+      await deletePropertiesFromAllRelations(relationType, propertiesToDelete);
+      res.status(200).send({ message: 'Propiedades eliminadas de todas las relaciones.' });
+  } catch (error) {
+      res.status(500).send({ error: 'Error eliminando propiedades.', details: error.message });
   }
 });
 

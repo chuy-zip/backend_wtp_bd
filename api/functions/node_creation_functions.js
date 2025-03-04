@@ -6,10 +6,11 @@ export async function createPost(username, text, imagen, hashtags, reposted = fa
 
     try {
         const idResult = await session.run(
-            'MATCH (p:Post) RETURN p.id ORDER BY p.id DESC LIMIT 1'
+            'MATCH (p:Post) RETURN p.id AS id ORDER BY id DESC LIMIT 1'
         );
-        
-        const highestId = idResult.records.length > 0 ? idResult.records[0].get('p.id').toNumber() : 0;
+        console.log(idResult.records[0].get('id'));
+
+        const highestId = idResult.records.length > 0 ? idResult.records[0].get('id') : 0;
         const newId = highestId + 1;
 
 
@@ -71,6 +72,34 @@ export async function createUser(username, password, email, born, first_name, la
 }
 
 
+export async function createAdmin(username, password, email, born, first_name, last_name, gender) {
+    const query = `
+        CREATE (u:User:Admin {
+            user_name: $username,
+            password: $password,
+            email: $email,
+            born: $born,
+            first_name: $first_name,
+            last_name: $last_name,
+            gender: $gender,
+            followers: 0,
+            following: 0,
+            verified: false
+        })
+    `;
+
+    const session = driver.session();
+
+    try {
+        await session.run(query, { username, password, email, born, first_name, last_name, gender });
+        console.log("User created successfully.");
+    } catch (error) {
+        console.error("Error executing query:", error);
+    } finally {
+        await session.close();
+    }
+}
+
 export async function createComment(text, reposted = false, postId, username, writterIsActive, isPinned = false, language = "english") {
     const session = driver.session();
 
@@ -86,7 +115,7 @@ export async function createComment(text, reposted = false, postId, username, wr
             'MATCH (c:Comment) RETURN c.id ORDER BY c.id DESC LIMIT 1'
         );
 
-        const highestId = idResult.records.length > 0 ? idResult.records[0].get('c.id').toNumber() : 0;
+        const highestId = idResult.records.length > 0 ? idResult.records[0].get('c.id') : 0;
         const newId = highestId + 1;
 
         const query = `
@@ -130,7 +159,7 @@ export async function createTopic( name, description, user_name, source, visibil
             'MATCH (t:Topic) RETURN t.id ORDER BY t.id DESC LIMIT 1'
         );
         
-        const highestId = idResult.records.length > 0 ? idResult.records[0].get('t.id').toNumber() : 0;
+        const highestId = idResult.records.length > 0 ? idResult.records[0].get('t.id') : 0;
         const newId = highestId + 1;
 
         const query = `
@@ -172,7 +201,7 @@ export async function createCountry(name, description, continent, language, coun
             'MATCH (ct:Country) RETURN ct.id ORDER BY ct.id DESC LIMIT 1'
         );
         
-        const highestId = idResult.records.length > 0 ? idResult.records[0].get('ct.id').toNumber() : 0;
+        const highestId = idResult.records.length > 0 ? idResult.records[0].get('ct.id') : 0;
         const newId = highestId + 1;
 
         const query = `
@@ -492,4 +521,97 @@ export async function deletePostById(postId) {
     } finally {
         await session.close();
     }
+}
+
+export async function deletePropertiesFromNode(nodeLabel, nodeKey, keyValue, properties) {
+    const session = driver.session();
+
+    try {
+        const removeQuery = properties.map(prop => `REMOVE n.${prop}`).join('\n');
+
+        const query = `
+            MATCH (n:${nodeLabel} {${nodeKey}: $keyValue})
+            ${removeQuery}
+        `;
+
+        await session.run(query, { keyValue });
+        console.log(`Propiedades eliminadas del nodo ${nodeLabel} con ${nodeKey} = '${keyValue}'.`);
+    } catch (error) {
+        console.error("Error al eliminar propiedades del nodo:", error);
+    } finally {
+        await session.close();
+    }
+}
+
+export async function deletePropertiesFromMultipleNodes(nodeLabel, properties) {
+    const session = driver.session();
+
+    try {
+        const removeQuery = properties.map(prop => `REMOVE n.${prop}`).join('\n');
+
+        const query = `
+            MATCH (n:${nodeLabel})
+            ${removeQuery}
+        `;
+
+        await session.run(query);
+        console.log(`Propiedades eliminadas de todos los nodos ${nodeLabel}.`);
+    } catch (error) {
+        console.error("Error al eliminar propiedades de múltiples nodos:", error);
+    } finally {
+        await session.close();
+    }
+}
+
+// eliminar 1 o más propiedades de 1 relación especifica entre 2 nodos
+export async function deletePropertiesFromRelation(
+  node1Type, node1IdentifierName, node1IdentifierValue,
+  node2Type, node2IdentifierName, node2IdentifierValue,
+  relationType, propertiesToDelete
+) {
+  const session = driver.session();
+
+  try {
+      const removeClause = propertiesToDelete.map(prop => `r.${prop}`).join(', ');
+
+      const query = `
+          MATCH (n1:${node1Type} {${node1IdentifierName}: $node1IdentifierValue})
+                -[r:${relationType}]- 
+                (n2:${node2Type} {${node2IdentifierName}: $node2IdentifierValue})
+          REMOVE ${removeClause}
+      `;
+
+      await session.run(query, {
+          node1IdentifierValue,
+          node2IdentifierValue,
+      });
+
+      console.log(`Propiedades ${propertiesToDelete} eliminadas de la relación ${relationType} entre ${node1Type} y ${node2Type}.`);
+  } catch (error) {
+      console.error("Error deleting properties from relation:", error);
+  } finally {
+      await session.close();
+  }
+}
+
+// eliminar 1 o más atributos de todas las relaciones llamadas de la misma forma
+export async function deletePropertiesFromAllRelations(relationType, propertiesToDelete) {
+  const session = driver.session();
+
+  try {
+      const removeClause = propertiesToDelete.map(prop => `r.${prop}`).join(', ');
+
+      const query = `
+          MATCH ()-[r:${relationType}]-()
+          REMOVE ${removeClause}
+      `;
+
+      await session.run(query);
+
+      console.log(`Propiedades eliminadas de todas las relaciones de tipo ${relationType}.`);
+  } catch (error) {
+      console.error("Error deleting properties from all relations:", error);
+  } finally {
+      await session.close();
+  }
 }
