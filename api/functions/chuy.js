@@ -89,6 +89,7 @@ export async function getPostsWithLimit(post_limit) {
         WHERE creator_count = 1
         MATCH (user:User)-[created:CREATED]->(post)
         RETURN user, created, post
+        ORDER BY post.id DESC
         LIMIT $post_limit;
         `;
 
