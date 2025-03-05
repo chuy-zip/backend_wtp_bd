@@ -260,7 +260,6 @@ export async function likeNode(user_name, nodeId, nodeType, browser, source) {
     const session = driver.session();
 
     try {
-        const timeStamp = new Date();
 
         if (nodeType !== "Post" && nodeType !== "Comment") {
             throw new Error("Invalid nodeType. Must be 'Post' or 'Comment'.");
@@ -268,15 +267,15 @@ export async function likeNode(user_name, nodeId, nodeType, browser, source) {
 
         const query = `
             MATCH (u:User {user_name: $user_name}), (n:${nodeType} {id: $nodeId})
-            CREATE (u)-[:LIKE {
-                time: $timeStamp,
+            CREATE (u)-[:LIKES {
+                time: datetime(),
                 browser: $browser,
                 source: $source
             }]->(n)
             SET n.likes = coalesce(n.likes, 0) + 1
         `;
 
-        await session.run(query, { user_name, nodeId, timeStamp, browser, source });
+        await session.run(query, { user_name, nodeId, browser, source });
 
         console.log(`User ${user_name} liked ${nodeType} ${nodeId} successfully.`);
     } catch (error) {
@@ -290,7 +289,6 @@ export async function dislikeNode(user_name, nodeId, nodeType, browser, source) 
     const session = driver.session();
 
     try {
-        const timeStamp = new Date();
 
         if (nodeType !== "Post" && nodeType !== "Comment") {
             throw new Error("Invalid nodeType. Must be 'Post' or 'Comment'.");
@@ -298,15 +296,15 @@ export async function dislikeNode(user_name, nodeId, nodeType, browser, source) 
 
         const query = `
             MATCH (u:User {user_name: $user_name}), (n:${nodeType} {id: $nodeId})
-            CREATE (u)-[:DISLIKE {
-                time: $timeStamp,
+            CREATE (u)-[:DISLIKES {
+                time: datetime(),
                 browser: $browser,
                 source: $source
             }]->(n)
-            SET n.likes = coalesce(n.likes, 0) + 1
+            SET n.dislikes = coalesce(n.dislikes, 0) + 1
         `;
 
-        await session.run(query, { user_name, nodeId, timeStamp, browser, source });
+        await session.run(query, { user_name, nodeId, browser, source });
 
         console.log(`User ${user_name} disliked ${nodeType} ${nodeId} successfully.`);
     } catch (error) {
@@ -399,7 +397,7 @@ export async function blockUser(blockerUsername, blockedUsername, reason, isPerm
             MATCH (blocker:User {user_name: $blockerUsername})
             MATCH (blocked:User {user_name: $blockedUsername})
             CREATE (blocker)-[:BLOCKED {
-                time_stamp: $timeStamp,
+                time_stamp: datetime(),
                 reason: $reason,
                 is_permanent: $isPermanent
             }]->(blocked)
@@ -615,3 +613,188 @@ export async function deletePropertiesFromAllRelations(relationType, propertiesT
       await session.close();
   }
 }
+
+// eliman todos los posto de un usuario
+export async function deletePostsByUser(user_name) {
+    const session = driver.session();
+
+    try {
+        const query = `
+            MATCH (u:User {user_name: $user_name})-[:CREATED]->(p:Post)
+            DETACH DELETE p
+        `;
+
+        await session.run(query, { user_name });
+        console.log(`Todos los Posts del usuario '${user_name}' han sido eliminados.`);
+    } catch (error) {
+        console.error("Error al eliminar Posts:", error);
+    } finally {
+        await session.close();
+    }
+}
+
+// crea propiedades en relaciones
+export async function addPropertiesToRelation(
+    node1Type, node1IdentifierName, node1IdentifierValue,
+    node2Type, node2IdentifierName, node2IdentifierValue,
+    relationType, propertiesToAdd
+  ) {
+    const session = driver.session();
+  
+    try {
+      const setClause = Object.keys(propertiesToAdd)
+        .map(prop => `r.${prop} = $${prop}`)
+        .join(', ');
+  
+      const params = {
+        node1IdentifierValue,
+        node2IdentifierValue,
+        ...propertiesToAdd
+      };
+  
+      const query = `
+        MATCH (n1:${node1Type} {${node1IdentifierName}: $node1IdentifierValue})
+              -[r:${relationType}]- 
+              (n2:${node2Type} {${node2IdentifierName}: $node2IdentifierValue})
+        SET ${setClause}
+      `;
+  
+      await session.run(query, params);
+  
+      console.log(`Propiedades ${Object.keys(propertiesToAdd)} agregadas a la relación ${relationType} entre ${node1Type} y ${node2Type}.`);
+    } catch (error) {
+      console.error("Error adding properties to relation:", error);
+    } finally {
+      await session.close();
+    }
+  }
+
+  export async function addPropertiesToAllRelations(relationType, propertiesToAdd) {
+    const session = driver.session();
+  
+    try {
+      const setClause = Object.keys(propertiesToAdd)
+        .map(prop => `r.${prop} = $${prop}`)
+        .join(', ');
+  
+      const query = `
+        MATCH ()-[r:${relationType}]-()
+        SET ${setClause}
+      `;
+  
+      await session.run(query, propertiesToAdd);
+  
+      console.log(`Propiedades ${Object.keys(propertiesToAdd)} agregadas a todas las relaciones de tipo ${relationType}.`);
+    } catch (error) {
+      console.error("Error adding properties to all relations:", error);
+    } finally {
+      await session.close();
+    }
+  }
+  
+  export async function checkFollowsRelation(user1Name, user2Name) {
+    const session = driver.session();
+  
+    try {
+      const query = `
+        MATCH (u1:User {user_name: $user1Name})-[r:FOLLOWS]->(u2:User {user_name: $user2Name})
+        RETURN COUNT(r) AS relationCount
+      `;
+  
+      const result = await session.run(query, {
+        user1Name,
+        user2Name,
+      });
+      
+      const relationCount = result.records[0].get('relationCount').toNumber();
+  
+      return relationCount > 0;
+    } catch (error) {
+      console.error("Error checking FOLLOWS relation:", error);
+      return false;
+    } finally {
+      await session.close();
+    }
+  }
+  
+  export async function unfollowUser(followerName, followedName) {
+    const session = driver.session();
+  
+    try {
+      const query = `
+        MATCH (follower:User {user_name: $followerName})-[r:FOLLOWS]->(followed:User {user_name: $followedName})
+        DELETE r
+        SET follower.following = CASE 
+                                    WHEN follower.following > 0 THEN follower.following - 1 
+                                    ELSE 0 
+                                 END,
+            followed.followers = CASE 
+                                    WHEN followed.followers > 0 THEN followed.followers - 1 
+                                    ELSE 0 
+                                 END
+      `;
+  
+      await session.run(query, {
+        followerName,
+        followedName,
+      });
+  
+      console.log(`${followerName} dejó de seguir a ${followedName}`);
+    } catch (error) {
+      console.error("Error during unfollow:", error);
+    } finally {
+      await session.close();
+    }
+  }
+  
+
+export async function checkLikeBetweenUserAndPost(userName, postId) {
+    const session = driver.session();
+  
+    try {
+      const query = `
+        MATCH (u1:User {user_name: $userName})-[r:LIKES]->(u2:Post {id: $postId})
+        RETURN COUNT(r) AS relationCount
+      `;
+  
+      const result = await session.run(query, {
+        userName,
+        postId,
+      });
+      
+      const relationCount = result.records[0].get('relationCount').toNumber();
+  
+      return relationCount > 0;
+    } catch (error) {
+      console.error("Error checking FOLLOWS relation:", error);
+      return false;
+    } finally {
+      await session.close();
+    }
+}
+
+export async function checkLikeBetweenUserAndComment(userName, commentId) {
+    const session = driver.session();
+  
+    try {
+      const query = `
+        MATCH (u1:User {user_name: $userName})-[r:LIKES]->(u2:Post {id: $commentId})
+        RETURN COUNT(r) AS relationCount
+      `;
+  
+      const result = await session.run(query, {
+        userName,
+        commentId,
+      });
+      
+      const relationCount = result.records[0].get('relationCount').toNumber();
+  
+      return relationCount > 0;
+    } catch (error) {
+      console.error("Error checking FOLLOWS relation:", error);
+      return false;
+    } finally {
+      await session.close();
+    }
+  }
+  
