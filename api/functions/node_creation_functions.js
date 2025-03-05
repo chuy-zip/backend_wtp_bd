@@ -301,7 +301,7 @@ export async function dislikeNode(user_name, nodeId, nodeType, browser, source) 
                 browser: $browser,
                 source: $source
             }]->(n)
-            SET n.likes = coalesce(n.likes, 0) + 1
+            SET n.dislikes = coalesce(n.dislikes, 0) + 1
         `;
 
         await session.run(query, { user_name, nodeId, browser, source });
